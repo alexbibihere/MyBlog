@@ -45,13 +45,20 @@
         <processorPath useClasspath="true" />
         <module name="MyBlog-Manager-Service" />
       </profile>
+      <profile default="false" name="Annotation profile for MyBlog-Utils" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+      </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
+    <bytecodeTargetLevel target="1.8">
       <module name="MyBlog" target="1.7" />
       <module name="MyBlog-Manager-Controller" target="1.7" />
       <module name="MyBlog-Manager-Dao" target="1.7" />
       <module name="MyBlog-Manager-Pojo" target="1.7" />
       <module name="MyBlog-Manager-Service" target="1.7" />
+      <module name="MyBlog-Utils" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

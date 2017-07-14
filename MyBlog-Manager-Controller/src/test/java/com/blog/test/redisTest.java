@@ -2,6 +2,7 @@ package com.blog.test;
 
 
 import com.blog.pojo.User;
+import com.blog.redis.utils.JedisClient;
 import com.blog.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,19 +20,21 @@ import java.util.List;
 @ContextConfiguration(locations = {"classpath:spring/applicationContext-*.xml","classpath:spring/spring-mvc.xml"})
 public class redisTest {
 
-    /*@Autowired
-    private JedisClient jedisClient;*/
+    @Autowired
+    private JedisClient jedisClient;
 
     @Autowired
     private UserService userService;
 
-    /*@Test
+    @Test
     public void testString(){
 
-        String s = jedisClient.set("name", "xiaomling");
+        //String s = jedisClient.set("name", "xiaomling");
 
-        System.out.print(s);
-    }*/
+        String name = jedisClient.get("name");
+
+        System.out.print(name);
+    }
 
     @Test
     public void testUsers(){

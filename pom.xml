@@ -14,6 +14,7 @@
         <module>MyBlog-Manager-Service</module>
         <module>MyBlog-Manager-Dao</module>
         <module>Myblog-Manager-Controller</module>
+        <module>MyBlog-Utils</module>
     </modules>
 
     <!-- 集中配置版本号 -->

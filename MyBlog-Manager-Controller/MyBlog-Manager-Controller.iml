@@ -30,6 +30,7 @@
     </content>
     <orderEntry type="jdk" jdkName="1.8 (2)" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="MyBlog-Utils" />
     <orderEntry type="module" module-name="MyBlog-Manager-Service" />
     <orderEntry type="module" module-name="MyBlog-Manager-Dao" />
     <orderEntry type="module" module-name="MyBlog-Manager-Pojo" />
