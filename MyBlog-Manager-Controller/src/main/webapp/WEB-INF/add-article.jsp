@@ -102,8 +102,8 @@
           <div class="col-md-9">
             <h1 class="page-header">撰写新文章</h1>
             <div class="form-group">
-              <label for="article-title" class="sr-only">标题</label>
-              <input type="text" id="article-title" name="title" class="form-control" placeholder="在此处输入标题" required autofocus autocomplete="off">
+              <label for="title" class="sr-only">标题</label>
+              <input type="text" id="title" name="title" class="form-control" placeholder="在此处输入标题" required autofocus autocomplete="off">
             </div>
             <div class="form-group">
               <label for="article-content" class="sr-only">内容</label>
@@ -112,7 +112,7 @@
             <div class="add-article-box">
               <h2 class="add-article-box-title"><span>关键字</span></h2>
               <div class="add-article-box-content">
-              	<input type="text" class="form-control" placeholder="请输入关键字" name="keywords" autocomplete="off">
+              	<input type="text" class="form-control" placeholder="请输入关键字" name="keyword" autocomplete="off">
                 <span class="prompt-text">多个标签请用英文逗号,隔开。</span>
               </div>
             </div>
@@ -161,13 +161,13 @@
             <div class="add-article-box">
               <h2 class="add-article-box-title"><span>标签</span></h2>
               <div class="add-article-box-content">
-                <input type="text" class="form-control" placeholder="输入新标签" name="tags" autocomplete="off">
+                <input type="text" class="form-control" placeholder="输入新标签" name="label" autocomplete="off">
                 <span class="prompt-text">多个标签请用英文逗号,隔开</span> </div>
             </div>
             <div class="add-article-box">
               <h2 class="add-article-box-title"><span>标题图片</span></h2>
               <div class="add-article-box-content">
-                <input type="text" class="form-control" placeholder="点击按钮选择图片" id="pictureUpload" name="titlepic" autocomplete="off">
+                <input type="text" class="form-control" placeholder="点击按钮选择图片" id="titleImages" name="titleImages" autocomplete="off">
               </div>
               <div class="add-article-box-footer">
                 <button class="btn btn-default" type="button" ID="upImage">选择</button>
@@ -177,8 +177,11 @@
               <h2 class="add-article-box-title"><span>发布</span></h2>
               <div class="add-article-box-content">
               	<p><label>状态：</label><span class="article-status-display">未发布</span></p>
-                <p><label>公开度：</label><input type="radio" name="visibility" value="0" checked/>公开 <input type="radio" name="visibility" value="1" />加密</p>
-                <p><label>发布于：</label><span class="article-time-display"><input style="border: none;" type="datetime" name="time" value="2016-01-09 17:29:37" /></span></p>
+                <p><label>公开度：</label><input type="radio" name="visibility" value="0" checked/>
+                          公开 <input type="radio" name="visibility" value="1" />加密</p>
+                <p><label>
+                  发布于：</label><span class="article-time-display">
+                  <input style="border: none;" type="datetime" name="time" value="2016-01-09 17:29:37" /></span></p>
               </div>
               <div class="add-article-box-footer">
                 <button class="btn btn-primary" type="submit" name="submit">发布</button>
@@ -331,11 +334,15 @@
 </div>
 <script src="js/bootstrap.min.js"></script> 
 <script src="js/admin-scripts.js"></script>
+
 <script src="lib/ueditor/ueditor.config.js"></script> 
-<script src="lib/ueditor/ueditor.all.min.js"> </script> 
-<script src="lib/ueditor/lang/zh-cn/zh-cn.js"></script>  
+<script src="lib/ueditor/ueditor.all.min.js"> </script>
+<script src="lib/ueditor/lang/zh-cn/zh-cn.js"></script>
+
 <script id="uploadEditor" type="text/plain" style="display:none;"></script>
+
 <script type="text/javascript">
+
 var editor = UE.getEditor('article-content');
 window.onresize=function(){
     window.location.reload();
@@ -352,7 +359,7 @@ $(function () {
         //侦听图片上传
         _uploadEditor.addListener('beforeInsertImage', function (t, arg) {
             //将地址赋值给相应的input,只去第一张图片的路径
-            $("#pictureUpload").attr("value", arg[0].src);
+            $("#titleImages").attr("value", arg[0].src);
             //图片预览
             //$("#imgPreview").attr("src", arg[0].src);
         })
@@ -364,13 +371,14 @@ $(function () {
 });
 //弹出图片上传的对话框
 $('#upImage').click(function () {
-    var myImage = _uploadEditor.getDialog("insertimage");
-    myImage.open();
+  var myImage = _uploadEditor.getDialog("insertimage");
+  myImage.open();
 });
+
 //弹出文件上传的对话框
 function upFiles() {
-    var myFiles = _uploadEditor.getDialog("attachment");
-    myFiles.open();
+  var myFiles = _uploadEditor.getDialog("attachment");
+  myFiles.open();
 }
 </script>
 </body>

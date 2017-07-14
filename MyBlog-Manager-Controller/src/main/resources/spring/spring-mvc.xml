@@ -28,6 +28,7 @@
     <mvc:resources location="/WEB-INF/css/" mapping="/css/**"/>
     <mvc:resources location="/WEB-INF/fonts/" mapping="/fonts/**"/>
     <mvc:resources location="/WEB-INF/images/" mapping="/images/**"/>
+    <mvc:resources location="/WEB-INF/lib/" mapping="/lib/**"/>
 
     <!-- 定义跳转的文件的前后缀 ，视图模式配置 -->
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
