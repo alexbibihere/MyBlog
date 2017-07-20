@@ -13,4 +13,6 @@ is_open int DEFAULT '0' COMMENT "是否公开",
 release_Date TIME COMMENT "发布时间"
 )COMMENT "文章表";
 
+alter table article add content VARCHAR(500) not null COMMENT "内容";
+
 

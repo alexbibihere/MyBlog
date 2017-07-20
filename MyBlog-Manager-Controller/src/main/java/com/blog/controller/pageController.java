@@ -19,7 +19,7 @@ public class pageController {
     }
 
     @RequestMapping("/{page}")
-    public String PageCoontroller(@PathVariable String page){
+    public String PageController(@PathVariable String page){
 
         return  page;
     }

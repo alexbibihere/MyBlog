@@ -2,11 +2,12 @@ package com.blog.service.impl;
 
 import com.blog.dao.UserMapper;
 import com.blog.service.UserService;
+import com.blog.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import com.blog.pojo.User;
+
 /**
  * Created by Administrator on 2017/7/12.
  */

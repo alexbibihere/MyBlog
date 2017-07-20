@@ -34,7 +34,7 @@
         <constructor-arg name="poolConfig" ref="jedisPoolConfig"></constructor-arg>
     </bean>
 
-     <!--<bean id="jedisClient" class="com.blog.redis.utils.JedisClientImpl"/>-->
+     <!--<bean id="jedisClient" class="com.blog.utils.JedisClientImpl"/>-->
 
 
     <!-- <bean id="jedisClient" class="cn.sys.auth.redisCach.JedisClientSingleService"/>  -->

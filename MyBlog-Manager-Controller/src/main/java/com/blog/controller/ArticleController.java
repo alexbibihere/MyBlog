@@ -2,37 +2,98 @@ package com.blog.controller;
 
 import com.blog.pojo.Article;
 import com.blog.service.ArticleService;
+import com.blog.utils.PageResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * Created by Administrator on 2017/7/14.
+ *丁俊
  */
 @Controller
-public class ArticleController {
+@RequestMapping("/article")
+public class ArticleController extends BaseController{
+
+    private Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private ArticleService articleService;
 
-    @RequestMapping("/Article/add")
+    //@RequestParam("titleImages") MultipartFile file
+
+    /**
+     * 增加文章的信息
+     * @param article
+     * @param model
+     * @return
+     */
+    @RequestMapping("/add")
     public String addArticle(Article article, Model model){
 
         Integer count = articleService.insertArticle(article);
 
-        return "redirect:/Article/findList";
+        return "redirect:/article/findList";
     };
 
-    @RequestMapping("/Article/findList")
-    public String findArticleList(Model model,Article article){
+    /**
+     * 查询所有文章的信息
+     * @return
+     */
+    @RequestMapping("/findList")
+    @ResponseBody
+    public String findArticleList(Integer pageNo,Integer pageSize){
 
-        List<Article> articleList = articleService.findArticleList(article);
+        System.out.print(pageNo+","+pageSize);
+        logger.info("分页查询用户信息列表请求入参：pageNumber{},pageSize{}", pageNo,pageSize);
 
-        model.addAttribute("articleList",articleList);
+        try {
+            PageResult<Article> articleList = articleService.findArticleList(pageNo, pageSize);
+            return responseSuccess(articleList);
+        } catch (Exception e) {
+            return responseFail(e.getMessage());
+        }
+    }
 
-        return "article";
+    /**
+     * 删除文章
+     * @param id
+     * @return
+     */
+    @RequestMapping(value = "/delete",method = RequestMethod.POST)
+    public String deleteArticle(String id){
+        articleService.deleteArticle(Integer.parseInt(id));
+        return "redirect:/article/findList";
+    }
+
+    /**
+     * 修改文章的信息之前，查询单个的文章信息，回显
+     * @param id
+     * @param model
+     * @return
+     */
+    @RequestMapping("/get")
+    public String getArticle(String id,Model model){
+        Article article = articleService.getArticle(Integer.parseInt(id));
+        model.addAttribute("article",article);
+        return "update-article";
+    }
+
+    /**
+     * 修改文章
+     * @param article
+     * @return
+     */
+    @RequestMapping("/update")
+    public String modifyArticle(Article article,String id){
+        article.setId(Integer.parseInt(id));
+        articleService.updateArticle(article);
+        return "redirect:/article/findList";
     }
 }

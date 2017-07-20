@@ -1,8 +1,6 @@
 package com.blog.test;
-
-
+import com.blog.utils.JedisClient;
 import com.blog.pojo.User;
-import com.blog.redis.utils.JedisClient;
 import com.blog.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -11,5 +11,11 @@ public interface ArticleMapper {
 
     Integer insertArticle(Article article);
 
-    List<Article> findArticleList(Article article);
+    List<Article> findArticleList();
+
+    void deleteArticle(Article article);
+
+    Article getArticle(Integer id);
+
+    void updateArticle(Article article);
 }

@@ -13,16 +13,21 @@
 <link rel="apple-touch-icon-precomposed" href="images/icon/icon.png">
 <link rel="shortcut icon" href="images/icon/favicon.ico">
 <script src="js/jquery-2.1.4.min.js"></script>
-<!--[if gte IE 9]>
   <script src="js/jquery-1.11.1.min.js" type="text/javascript"></script>
   <script src="js/html5shiv.min.js" type="text/javascript"></script>
   <script src="js/respond.min.js" type="text/javascript"></script>
   <script src="js/selectivizr-min.js" type="text/javascript"></script>
+<!--[if gte IE 9]>
+
 <![endif]-->
 <!--[if lt IE 9]>
   <script>window.location.href='upgrade-browser.html';</script>
 <![endif]-->
 </head>
+
+<% String contextPath = request.getContextPath();
+   request.setAttribute("contextPath",contextPath);
+%>
 
 <body class="user-select">
 <section class="container-fluid">
@@ -61,7 +66,7 @@
         <li class="active"><a href="index.html">报告</a></li>
       </ul>
       <ul class="nav nav-sidebar">
-        <li><a href="article.html">文章</a></li>
+        <li><a href="${contextPath}/article">文章</a></li>
         <li><a href="notice.html">公告</a></li>
         <li><a href="comment.html">评论</a></li>
         <li><a data-toggle="tooltip" data-placement="bottom" title="网站暂无留言功能">留言</a></li>

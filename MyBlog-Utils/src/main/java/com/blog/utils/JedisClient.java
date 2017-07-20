@@ -1,4 +1,4 @@
-package com.blog.redis.utils;
+package com.blog.utils;
 
 /**
  * Created by Administrator on 2017/7/11.

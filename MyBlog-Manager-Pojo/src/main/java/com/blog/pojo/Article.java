@@ -18,6 +18,8 @@ public class Article {
 
     private String column;//栏目
 
+    private String content;//内容
+
     private String label;//标签
 
     private String titleImages;//标题图片
@@ -30,7 +32,7 @@ public class Article {
 
     private Integer idOpen;//是否公开
 
-    private Date releaseDate;//发布时间
+    private String releaseDate;//发布时间
 
 
     public Integer getId() {
@@ -121,12 +123,20 @@ public class Article {
         this.idOpen = idOpen;
     }
 
-    public Date getReleaseDate() {
+    public String getReleaseDate() {
         return releaseDate;
     }
 
-    public void setReleaseDate(Date releaseDate) {
+    public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 
     @Override

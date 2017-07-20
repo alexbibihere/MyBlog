@@ -7,17 +7,17 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>文章修改 - 异清轩博客管理系统</title>
-<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="css/style.css">
-<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
-<link rel="apple-touch-icon-precomposed" href="images/icon/icon.png">
-<link rel="shortcut icon" href="images/icon/favicon.ico">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/font-awesome.min.css">
+<link rel="apple-touch-icon-precomposed" href="${pageContext.request.contextPath}/images/icon/icon.png">
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/images/icon/favicon.ico">
 <script src="js/jquery-2.1.4.min.js"></script>
 <!--[if gte IE 9]>
-  <script src="js/jquery-1.11.1.min.js" type="text/javascript"></script>
-  <script src="js/html5shiv.min.js" type="text/javascript"></script>
-  <script src="js/respond.min.js" type="text/javascript"></script>
-  <script src="js/selectivizr-min.js" type="text/javascript"></script>
+  <script src="${pageContext.request.contextPath}/js/jquery-1.11.1.min.js" type="text/javascript"></script>
+  <script src="${pageContext.request.contextPath}/js/html5shiv.min.js" type="text/javascript"></script>
+  <script src="${pageContext.request.contextPath}/js/respond.min.js" type="text/javascript"></script>
+  <script src="${pageContext.request.contextPath}/js/selectivizr-min.js" type="text/javascript"></script>
 <![endif]-->
 <!--[if lt IE 9]>
   <script>window.location.href='upgrade-browser.html';</script>
@@ -61,7 +61,7 @@
         <li><a href="index.html">报告</a></li>
       </ul>
       <ul class="nav nav-sidebar">
-        <li class="active"><a href="article.html">文章</a></li>
+        <li class="active"><a href="${pageContext.request.contextPath}/article/findList">文章</a></li>
         <li><a href="notice.html">公告</a></li>
         <li><a href="comment.html">评论</a></li>
         <li><a data-toggle="tooltip" data-placement="top" title="网站暂无留言功能">留言</a></li>
@@ -98,28 +98,29 @@
     </aside>
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-lg-10 col-md-offset-2 main" id="main">
       <div class="row">
-        <form action="/Article/update" method="post" class="add-article-form">
+        <form action="${pageContext.request.contextPath}/article/update" method="post" class="add-article-form">
+          <input name="id" type="hidden" value="${article.id}">
           <div class="col-md-9">
             <h1 class="page-header">文章修改</h1>
             <div class="form-group">
               <label for="article-title" class="sr-only">标题</label>
-              <input type="text" id="article-title" name="title" class="form-control" placeholder="在此处输入标题" value="这是测试的文章标题这是测试的文章标题这是测试的文章标题这是测试的文章标题" required autofocus autocomplete="off">
+              <input type="text" id="article-title" name="title" class="form-control" placeholder="在此处输入标题" value="${article.title}" required autofocus autocomplete="off">
             </div>
             <div class="form-group">
               <label for="article-content" class="sr-only">内容</label>
-              <script id="article-content" name="content" type="text/plain">这是测试的文章内容这是测试的文章内容这是测试的文章内容这是测试的文章内容这是测试的文章内容这是测试的文章内容这是测试的文章内容这是测试的文章内容这是测试的文章内容这是测试的文章内容这是测试的文章内容这是测试的文章内容这是测试的文章内容这是测试的文章内容这是测试的文章内容这是测试的文章内容这是测试的文章内容这是测试的文章内容这是测试的文章内容这是测试的文章内容这是测试的文章内容这是测试的文章内容这是测试的文章内容这是测试的文章内容这是测试的文章内容这是测试的文章内容这是测试的文章内容这是测试的文章内容这是测试的文章内容这是测试的文章内容这是测试的文章内容这是测试的文章内容这是测试的文章内容这是测试的文章内容这是测试的文章内容这是测试的文章内容这是测试的文章内容这是测试的文章内容这是测试的文章内容这是测试的文章内容这是测试的文章内容这是测试的文章内容这是测试的文章内容这是测试的文章内容这是测试的文章内容这是测试的文章内容这是测试的文章内容这是测试的文章内容这是测试的文章内容这是测试的文章内容.</script>
+              <script id="article-content" name="content" type="text/plain">${article.content}</script>
             </div>
             <div class="add-article-box">
               <h2 class="add-article-box-title"><span>关键字</span></h2>
               <div class="add-article-box-content">
               	<input type="text" class="form-control" placeholder="请输入关键字" value="测试,文章" name="keywords" autocomplete="off">
-                <span class="prompt-text">多个标签请用英文逗号,隔开。</span>
+                <span class="prompt-text">${article.keyword}</span>
               </div>
             </div>
             <div class="add-article-box">
               <h2 class="add-article-box-title"><span>描述</span></h2>
               <div class="add-article-box-content">
-              	<textarea class="form-control" name="describe" autocomplete="off">这是测试的文章描述这是测试的文章描述这是测试的文章描述这是测试的文章描述这是测试的文章描述这是测试的文章描述这是测试的文章描述这是测试的文章描述这是测试的文章描述这是测试的文章描述这是测试的文章描述这是测试的文章描述这是测试的文章描述这是测试的文章描述</textarea>
+              	<textarea class="form-control" name="describe" autocomplete="off">${article.describe}</textarea>
                 <span class="prompt-text">描述是可选的手工创建的内容总结，并可以在网页描述中使用</span>
               </div>
             </div>
@@ -132,28 +133,9 @@
                 <ul class="category-list">
                   <li>
                     <label>
-                      <input name="category" type="radio" value="1">
-                      这是栏目 <em class="hidden-md">( 栏目ID: <span>1</span> )</em></label>
-                  </li>
-                  <li>
-                    <label>
-                      <input name="category" type="radio" value="2">
-                      这是栏目 <em class="hidden-md">( 栏目ID: <span>2</span> )</em></label>
-                  </li>
-                  <li>
-                    <label>
-                      <input name="category" type="radio" value="3" checked>
-                      这是栏目 <em class="hidden-md">( 栏目ID: <span>3</span> )</em></label>
-                  </li>
-                  <li>
-                    <label>
-                      <input name="category" type="radio" value="4">
-                      这是栏目 <em class="hidden-md">( 栏目ID: <span>4</span> )</em></label>
-                  </li>
-                  <li>
-                    <label>
-                      <input name="category" type="radio" value="5">
-                      这是栏目 <em class="hidden-md">( 栏目ID: <span>5</span> )</em></label>
+                      <input name="column" type="radio" value="1">
+                      这是栏目 <em class="hidden-md">( 栏目ID: <span>1</span> )</em>
+                    </label>
                   </li>
                 </ul>
               </div>
@@ -161,13 +143,13 @@
             <div class="add-article-box">
               <h2 class="add-article-box-title"><span>标签</span></h2>
               <div class="add-article-box-content">
-                <input type="text" class="form-control" placeholder="输入新标签" value="测试,文章" name="tags" autocomplete="off">
+                <input type="text" class="form-control" placeholder="输入新标签" value="${article.label}" name="label" autocomplete="off">
                 <span class="prompt-text">多个标签请用英文逗号,隔开</span> </div>
             </div>
             <div class="add-article-box">
               <h2 class="add-article-box-title"><span>标题图片</span></h2>
               <div class="add-article-box-content">
-                <input type="text" class="form-control" placeholder="点击按钮选择图片" id="pictureUpload" name="titlepic" autocomplete="off">
+                <input type="text" class="form-control" placeholder="点击按钮选择图片" id="pictureUpload" name="titleImages" autocomplete="off">
               </div>
               <div class="add-article-box-footer">
                 <button class="btn btn-default" type="button" ID="upImage">选择</button>
@@ -177,8 +159,15 @@
               <h2 class="add-article-box-title"><span>发布</span></h2>
               <div class="add-article-box-content">
               	<p><label>状态：</label><span class="article-status-display">已发布</span></p>
-                <p><label>公开度：</label><input type="radio" name="visibility" value="0" checked/>公开 <input type="radio" name="visibility" value="1" />加密</p>
-                <p><label>发布于：</label><span class="article-time-display"><input style="border: none;" type="datetime" name="time" value="2016-01-09 17:29:37" /></span></p>
+                <p><label>公开度：
+                </label>
+                  <input type="radio" name="visibility" value="0" checked/>公开
+                  <input type="radio" name="visibility" value="1" />加密</p>
+                <p><label>发布于：
+                </label>
+                  <span class="article-time-display">
+                  <input style="border: none;" type="datetime" name="time" value="2016-01-09 17:29:37" />
+                </span></p>
               </div>
               <div class="add-article-box-footer">
                 <button class="btn btn-primary" type="submit" name="submit">更新</button>
@@ -329,11 +318,11 @@
     <li class="list-group-item"><span>浏览器：</span>Chrome47</li>
   </ul>
 </div>
-<script src="js/bootstrap.min.js"></script> 
-<script src="js/admin-scripts.js"></script>
-<script src="lib/ueditor/ueditor.config.js"></script> 
-<script src="lib/ueditor/ueditor.all.min.js"> </script> 
-<script src="lib/ueditor/lang/zh-cn/zh-cn.js"></script>  
+<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/admin-scripts.js"></script>
+<script src="${pageContext.request.contextPath}/lib/ueditor/ueditor.config.js"></script>
+<script src="${pageContext.request.contextPath}/lib/ueditor/ueditor.all.min.js"> </script>
+<script src="${pageContext.request.contextPath}/lib/ueditor/lang/zh-cn/zh-cn.js"></script>
 <script id="uploadEditor" type="text/plain" style="display:none;"></script>
 <script type="text/javascript">
 var editor = UE.getEditor('article-content');

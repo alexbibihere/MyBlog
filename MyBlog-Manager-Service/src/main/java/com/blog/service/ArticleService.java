@@ -1,13 +1,15 @@
 package com.blog.service;
 
 import com.blog.pojo.Article;
-
-import java.util.List;
+import com.blog.utils.PageResult;
 
 /**
  * Created by Administrator on 2017/7/14.
  */
 public interface ArticleService {
     Integer insertArticle(Article article);
-    List<Article> findArticleList(Article article);
+    PageResult<Article> findArticleList(Integer pageNo,Integer pageSize);
+    void deleteArticle(Integer id);
+    Article getArticle(Integer id);
+    void updateArticle(Article article);
 }

@@ -25,6 +25,9 @@
 </head>
 
 <body class="user-select">
+<% String contextPath = request.getContextPath();
+   request.setAttribute("contextPath",contextPath);
+%>
 <section class="container-fluid">
   <header>
     <nav class="navbar navbar-default navbar-fixed-top">
@@ -61,7 +64,7 @@
         <li><a href="index.html">报告</a></li>
       </ul>
       <ul class="nav nav-sidebar">
-        <li class="active"><a href="article.html">文章</a></li>
+        <li class="active"><a href="${pageContext.request.contextPath}/article/findList">文章</a></li>
         <li><a href="notice.html">公告</a></li>
         <li><a href="comment.html">评论</a></li>
         <li><a data-toggle="tooltip" data-placement="top" title="网站暂无留言功能">留言</a></li>
@@ -98,7 +101,7 @@
     </aside>
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-lg-10 col-md-offset-2 main" id="main">
       <div class="row">
-        <form action="/Article/add" method="post" class="add-article-form">
+        <form action="${pageContext.request.contextPath}/article/add" method="post" class="add-article-form">
           <div class="col-md-9">
             <h1 class="page-header">撰写新文章</h1>
             <div class="form-group">
@@ -109,7 +112,8 @@
               <label for="article-content" class="sr-only">内容</label>
               <script id="article-content" name="content" type="text/plain"></script>
             </div>
-            <div class="add-article-box">
+            <div class="add-article-box">文章
+
               <h2 class="add-article-box-title"><span>关键字</span></h2>
               <div class="add-article-box-content">
               	<input type="text" class="form-control" placeholder="请输入关键字" name="keyword" autocomplete="off">
@@ -132,28 +136,8 @@
                 <ul class="category-list">
                   <li>
                     <label>
-                      <input name="category" type="radio" value="1" checked>
+                      <input name="column" type="radio" value="1" checked>
                       这是栏目 <em class="hidden-md">( 栏目ID: <span>1</span> )</em></label>
-                  </li>
-                  <li>
-                    <label>
-                      <input name="category" type="radio" value="2">
-                      这是栏目 <em class="hidden-md">( 栏目ID: <span>2</span> )</em></label>
-                  </li>
-                  <li>
-                    <label>
-                      <input name="category" type="radio" value="3">
-                      这是栏目 <em class="hidden-md">( 栏目ID: <span>3</span> )</em></label>
-                  </li>
-                  <li>
-                    <label>
-                      <input name="category" type="radio" value="4">
-                      这是栏目 <em class="hidden-md">( 栏目ID: <span>4</span> )</em></label>
-                  </li>
-                  <li>
-                    <label>
-                      <input name="category" type="radio" value="5">
-                      这是栏目 <em class="hidden-md">( 栏目ID: <span>5</span> )</em></label>
                   </li>
                 </ul>
               </div>
@@ -170,18 +154,19 @@
                 <input type="text" class="form-control" placeholder="点击按钮选择图片" id="titleImages" name="titleImages" autocomplete="off">
               </div>
               <div class="add-article-box-footer">
-                <button class="btn btn-default" type="button" ID="upImage">选择</button>
-              </div>
+              <button class="btn btn-default" type="button" ID="upImage">选择</button>
+            </div>
             </div>
             <div class="add-article-box">
               <h2 class="add-article-box-title"><span>发布</span></h2>
               <div class="add-article-box-content">
               	<p><label>状态：</label><span class="article-status-display">未发布</span></p>
-                <p><label>公开度：</label><input type="radio" name="visibility" value="0" checked/>
-                          公开 <input type="radio" name="visibility" value="1" />加密</p>
+                <p><label>公开度：
+                </label><input type="radio" name="idOpen" value="0" checked/>公开
+                         <input type="radio" name="idOpen" value="1" />加密</p>
                 <p><label>
                   发布于：</label><span class="article-time-display">
-                  <input style="border: none;" type="datetime" name="time" value="2016-01-09 17:29:37" /></span></p>
+                  <input style="border: none;" type="datetime" name="releaseDate" value="" /></span></p>
               </div>
               <div class="add-article-box-footer">
                 <button class="btn btn-primary" type="submit" name="submit">发布</button>
