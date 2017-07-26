@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 /**
  * Created by Administrator on 2017/7/21.
+ * ueditor 核心类
  */
 @Controller
 @RequestMapping("/upload")
