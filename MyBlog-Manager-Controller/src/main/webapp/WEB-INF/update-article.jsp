@@ -150,6 +150,7 @@
               <h2 class="add-article-box-title"><span>标题图片</span></h2>
               <div class="add-article-box-content">
                 <input type="text" class="form-control" placeholder="点击按钮选择图片" id="pictureUpload" name="titleImages" autocomplete="off">
+                <img src="${article.titleImages}">
               </div>
               <div class="add-article-box-footer">
                 <button class="btn btn-default" type="button" ID="upImage">选择</button>

@@ -1,4 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%
+  String contextPath = request.getContextPath();
+  request.setAttribute("contextPath",contextPath);
+%>
 <!doctype html>
 <html lang="zh-CN">
 <head>
@@ -7,17 +11,17 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>写文章 - 博客管理系统</title>
-<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="css/style.css">
-<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
-<link rel="apple-touch-icon-precomposed" href="images/icon/icon.png">
+<link rel="stylesheet" type="text/css" href="${contextPath}/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="${contextPath}/css/style.css">
+<link rel="stylesheet" type="text/css" href="${contextPath}/css/font-awesome.min.css">
+<link rel="apple-touch-icon-precomposed" href="${contextPath}/images/icon/icon.png">
 <link rel="shortcut icon" href="images/icon/favicon.ico">
-<script src="js/jquery-2.1.4.min.js"></script>
+<script src="${contextPath}/js/jquery-2.1.4.min.js"></script>
+  <script src="${contextPath}/js/html5shiv.min.js" type="text/javascript"></script>
+  <script src="${contextPath}/js/respond.min.js" type="text/javascript"></script>
+  <script src="${contextPath}/js/selectivizr-min.js" type="text/javascript"></script>
 <!--[if gte IE 9]>
-  <script src="js/jquery-1.11.1.min.js" type="text/javascript"></script>
-  <script src="js/html5shiv.min.js" type="text/javascript"></script>
-  <script src="js/respond.min.js" type="text/javascript"></script>
-  <script src="js/selectivizr-min.js" type="text/javascript"></script>
+
 <![endif]-->
 <!--[if lt IE 9]>
   <script>window.location.href='upgrade-browser.html';</script>
@@ -25,9 +29,6 @@
 </head>
 
 <body class="user-select">
-<% String contextPath = request.getContextPath();
-   request.setAttribute("contextPath",contextPath);
-%>
 <section class="container-fluid">
   <header>
     <nav class="navbar navbar-default navbar-fixed-top">
@@ -101,7 +102,7 @@
     </aside>
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-lg-10 col-md-offset-2 main" id="main">
       <div class="row">
-        <form action="${pageContext.request.contextPath}/article/add" method="post" class="add-article-form">
+        <form action="${pageContext.request.contextPath}/article/add" method="post" class="add-article-form" enctype="multipart/form-data">
           <div class="col-md-9">
             <h1 class="page-header">撰写新文章</h1>
             <div class="form-group">
@@ -317,12 +318,13 @@
     <li class="list-group-item"><span>浏览器：</span>Chrome47</li>
   </ul>
 </div>
-<script src="js/bootstrap.min.js"></script> 
+<script src="js/bootstrap.min.js"></script>
 <script src="js/admin-scripts.js"></script>
 
-<script src="lib/ueditor/ueditor.config.js"></script> 
-<script src="lib/ueditor/ueditor.all.min.js"> </script>
-<script src="lib/ueditor/lang/zh-cn/zh-cn.js"></script>
+<script src="${contextPath}/lib/ueditor/ueditor.config.js"></script>
+<!-- 编辑器源码文件 -->
+<script src="${contextPath}/lib/ueditor/ueditor.all.min.js"> </script>
+<script src="${contextPath}/lib/ueditor/lang/zh-cn/zh-cn.js"></script>
 
 <script id="uploadEditor" type="text/plain" style="display:none;"></script>
 
@@ -334,6 +336,19 @@ window.onresize=function(){
 }
 var _uploadEditor;
 $(function () {
+  /*修改图片上传的路径*/
+  UE.Editor.prototype._bkGetActionUrl = UE.Editor.prototype.getActionUrl;
+  UE.Editor.prototype.getActionUrl = function(action) {
+    //这里很重要，很重要，很重要，要和配置中的imageActionName值一样
+    if (action == 'uploadimage') {
+      //这里调用后端我们写的图片上传接口
+      return 'http://localhost:8090/MyBlog/file/uploadimage';
+    }else{
+      return this._bkGetActionUrl.call(this, action);
+    }
+  }
+});
+
     //重新实例化一个编辑器，防止在上面的editor编辑器中显示上传的图片或者文件
     _uploadEditor = UE.getEditor('uploadEditor');
     _uploadEditor.ready(function () {
@@ -353,7 +368,7 @@ $(function () {
             $("#fileUpload").attr("value", _uploadEditor.options.filePath + arg[0].url);
         })
     });
-});
+
 //弹出图片上传的对话框
 $('#upImage').click(function () {
   var myImage = _uploadEditor.getDialog("insertimage");

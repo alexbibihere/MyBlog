@@ -16,7 +16,7 @@ import java.util.List;
 @Controller
 public class UserController {
 
-    @Autowired
+    /*@Autowired
     private UserService userService;
 
     @RequestMapping("/users")
@@ -25,6 +25,6 @@ public class UserController {
         List<User> userList = userService.findAllUser();
         System.out.println(JSONObject.toJSONString(userList));
         return "";
-    }
+    }*/
 
 }

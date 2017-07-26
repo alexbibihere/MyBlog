@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * Created by Administrator on 2017/7/14.
  *丁俊
@@ -26,8 +28,6 @@ public class ArticleController extends BaseController{
     @Autowired
     private ArticleService articleService;
 
-    //@RequestParam("titleImages") MultipartFile file
-
     /**
      * 增加文章的信息
      * @param article
@@ -35,7 +35,11 @@ public class ArticleController extends BaseController{
      * @return
      */
     @RequestMapping("/add")
-    public String addArticle(Article article, Model model){
+    public String addArticle(Article article, Model model, HttpServletRequest request){
+
+        String titleImages = request.getParameter("titleImages");
+
+        System.out.print("titleImages:"+titleImages);
 
         Integer count = articleService.insertArticle(article);
 
@@ -49,10 +53,7 @@ public class ArticleController extends BaseController{
     @RequestMapping("/findList")
     @ResponseBody
     public String findArticleList(Integer pageNo,Integer pageSize){
-
-        System.out.print(pageNo+","+pageSize);
         logger.info("分页查询用户信息列表请求入参：pageNumber{},pageSize{}", pageNo,pageSize);
-
         try {
             PageResult<Article> articleList = articleService.findArticleList(pageNo, pageSize);
             return responseSuccess(articleList);

@@ -50,7 +50,6 @@
             <artifactId>spring-data-commons</artifactId>
             <version>1.6.1.RELEASE</version>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-jpa</artifactId>
@@ -62,11 +61,18 @@
             <version>2.3</version>
             <classifier>jdk15</classifier>
         </dependency>
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20140107</version>
+        </dependency>
         <!-- ueditor -->
         <dependency>
-            <groupId>org.webjars.bower</groupId>
+            <groupId>com.baidu</groupId>
             <artifactId>ueditor</artifactId>
-            <version>1.4.3</version>
+            <version>1.1.2</version>
+            <scope>system</scope>
+            <systemPath>D:/MavenTest/repository/com/baidu/ueditor-1.1.2.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>org.apache.maven.plugins</groupId>
@@ -232,14 +238,6 @@
             <version>4.12</version>
         </dependency>
     </dependencies>
-
-    <!-- &lt;!&ndash; 添加fastjson &ndash;&gt;
-     <dependency>
-       <groupId>com.alibaba</groupId>
-       <artifactId>fastjson</artifactId>
-       <version>1.1.41</version>
-     </dependency>-->
-
     <build>
 
         <resources>
