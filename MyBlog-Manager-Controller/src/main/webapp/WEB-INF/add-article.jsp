@@ -65,7 +65,7 @@
         <li><a href="index.html">报告</a></li>
       </ul>
       <ul class="nav nav-sidebar">
-        <li class="active"><a href="${pageContext.request.contextPath}/article/findList">文章</a></li>
+        <li class="active"><a href="${pageContext.request.contextPath}/article">文章</a></li>
         <li><a href="notice.html">公告</a></li>
         <li><a href="comment.html">评论</a></li>
         <li><a data-toggle="tooltip" data-placement="top" title="网站暂无留言功能">留言</a></li>
