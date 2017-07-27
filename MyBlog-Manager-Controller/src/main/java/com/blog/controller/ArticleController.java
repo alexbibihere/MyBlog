@@ -43,7 +43,7 @@ public class ArticleController extends BaseController{
 
         Integer count = articleService.insertArticle(article);
 
-        return "redirect:/article/findList";
+        return "article";
     };
 
     /**
@@ -70,7 +70,7 @@ public class ArticleController extends BaseController{
     @RequestMapping(value = "/delete",method = RequestMethod.POST)
     public String deleteArticle(String id){
         articleService.deleteArticle(Integer.parseInt(id));
-        return "redirect:/article/findList";
+        return "article";
     }
 
     /**
@@ -95,6 +95,6 @@ public class ArticleController extends BaseController{
     public String modifyArticle(Article article,String id){
         article.setId(Integer.parseInt(id));
         articleService.updateArticle(article);
-        return "redirect:/article/findList";
+        return "article";
     }
 }

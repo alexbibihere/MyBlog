@@ -114,7 +114,6 @@
               <script id="article-content" name="content" type="text/plain"></script>
             </div>
             <div class="add-article-box">文章
-
               <h2 class="add-article-box-title"><span>关键字</span></h2>
               <div class="add-article-box-content">
               	<input type="text" class="form-control" placeholder="请输入关键字" name="keyword" autocomplete="off">

@@ -53,7 +53,7 @@ public class FileUploadController {
 
                 //将图片的url插入到数据库中
                 map.put("state", "SUCCESS");// UEDITOR的规则:不为SUCCESS则显示state的内容
-                map.put("url",newFileName);         //能访问到你现在图片的路径
+                map.put("url",filePath+"/"+newFileName);         //能访问到你现在图片的路径
                 map.put("title","");
                 map.put("original","realName");
             }catch (Exception e){
