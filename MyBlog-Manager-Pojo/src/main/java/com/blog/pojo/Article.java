@@ -32,7 +32,9 @@ public class Article {
 
     private Integer idOpen;//是否公开
 
-    private String releaseDate;//发布时间
+    private Date createTime;  //创建时间
+
+    private  Date modifiedTime; //修改时间
 
 
     public Integer getId() {
@@ -123,12 +125,20 @@ public class Article {
         this.idOpen = idOpen;
     }
 
-    public String getReleaseDate() {
-        return releaseDate;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setReleaseDate(String releaseDate) {
-        this.releaseDate = releaseDate;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getModifiedTime() {
+        return modifiedTime;
+    }
+
+    public void setModifiedTime(Date modifiedTime) {
+        this.modifiedTime = modifiedTime;
     }
 
     public String getContent() {
@@ -139,21 +149,5 @@ public class Article {
         this.content = content;
     }
 
-    @Override
-    public String toString() {
-        return "Article{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", keyword='" + keyword + '\'' +
-                ", describe='" + describe + '\'' +
-                ", column='" + column + '\'' +
-                ", label='" + label + '\'' +
-                ", titleImages='" + titleImages + '\'' +
-                ", userName='" + userName + '\'' +
-                ", isDel=" + isDel +
-                ", isRelease=" + isRelease +
-                ", idOpen=" + idOpen +
-                ", releaseDate=" + releaseDate +
-                '}';
-    }
+
 }

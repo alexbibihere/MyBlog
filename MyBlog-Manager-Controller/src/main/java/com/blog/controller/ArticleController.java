@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
@@ -43,19 +42,22 @@ public class ArticleController extends BaseController{
 
         Integer count = articleService.insertArticle(article);
 
-        return "article";
-    };
+        return "article"; }
+
+    ;
 
     /**
      * 查询所有文章的信息
      * @return
      */
-    @RequestMapping("/findList")
+    @RequestMapping("/select")
     @ResponseBody
-    public String findArticleList(Integer pageNo,Integer pageSize){
+    public String selectByAll(Integer pageNo,Integer pageSize){
         logger.info("分页查询用户信息列表请求入参：pageNumber{},pageSize{}", pageNo,pageSize);
         try {
-            PageResult<Article> articleList = articleService.findArticleList(pageNo, pageSize);
+            PageResult<Article> articleList = articleService.selectByAll(pageNo, pageSize);
+            int count = articleService.countByParams(null);
+            articleList.setTotal(count);
             return responseSuccess(articleList);
         } catch (Exception e) {
             return responseFail(e.getMessage());

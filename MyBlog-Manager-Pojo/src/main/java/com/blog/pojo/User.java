@@ -1,29 +1,29 @@
 package com.blog.pojo;
 
 import java.util.Date;
-
 /**
- * Created by Administrator on 2017/7/12.
+ *  @Author: Yan
+ *  @Description:
+ *  @Date: 2017/12/13/0013
  */
 public class User {
-
     private Integer id;
 
     private String username;
 
     private String password;
 
+    private Integer articleNum;
+
+    private Date lastLoginTime;
+
+    private Byte status;
+
+    private Integer isDeleted;
+
     private Date createTime;
 
     private Date modifiedTime;
-
-    public Date getModifiedTime() {
-        return modifiedTime;
-    }
-
-    public void setModifiedTime(Date modifiedTime) {
-        this.modifiedTime = modifiedTime;
-    }
 
     public Integer getId() {
         return id;
@@ -38,7 +38,7 @@ public class User {
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.username = username == null ? null : username.trim();
     }
 
     public String getPassword() {
@@ -46,7 +46,39 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = password == null ? null : password.trim();
+    }
+
+    public Integer getArticleNum() {
+        return articleNum;
+    }
+
+    public void setArticleNum(Integer articleNum) {
+        this.articleNum = articleNum;
+    }
+
+    public Date getLastLoginTime() {
+        return lastLoginTime;
+    }
+
+    public void setLastLoginTime(Date lastLoginTime) {
+        this.lastLoginTime = lastLoginTime;
+    }
+
+    public Byte getStatus() {
+        return status;
+    }
+
+    public void setStatus(Byte status) {
+        this.status = status;
+    }
+
+    public Integer getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(Integer isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
     public Date getCreateTime() {
@@ -57,14 +89,11 @@ public class User {
         this.createTime = createTime;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", createTime=" + createTime +
-                ", modifiedTime=" + modifiedTime +
-                '}';
+    public Date getModifiedTime() {
+        return modifiedTime;
+    }
+
+    public void setModifiedTime(Date modifiedTime) {
+        this.modifiedTime = modifiedTime;
     }
 }

@@ -22,7 +22,7 @@ public class pageHelperTest {
     @Test
     public void selectAll(){
 
-        PageResult<Article> list = articleService.findArticleList(1, 4);
+        PageResult<Article> list = articleService.selectByAll(1, 4);
 
         System.out.print(list);
     }

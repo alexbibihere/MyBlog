@@ -13,12 +13,13 @@
             <result column="is_del" property="isDel"></result>
             <result column="is_release" property="isRelease"></result>
             <result column="is_open" property="idOpen"></result>
-            <result column="release_Date" property="releaseDate"></result>
             <result column="content" property="content"></result>
+            <result column="create_time" property="createTime"></result>
+            <result column="modified_time" property="modifiedTime"></result>
     </resultMap>
 
     <sql id="base_sql">
-            id,title,keyword,article_describe,article_column,label,title_images,userName,is_del,is_release,is_open,release_Date,content
+            id,title,keyword,article_describe,article_column,label,title_images,userName,is_del,is_release,is_open,content,create_time,modified_time
     </sql>
 
     <insert id="insertArticle" parameterType="com.blog.pojo.Article">
@@ -57,8 +58,11 @@
                 <if test="idOpen != null">
                     is_open,
                 </if>
-                <if test="releaseDate != null">
-                    release_Date,
+                <if test="createTime != null">
+                    create_time,
+                </if>
+                <if test="modifiedTime != null">
+                    modified_time,
                 </if>
                 <if test="content != null">
                     content,
@@ -98,17 +102,22 @@
               <if test="idOpen != null">
                   #{idOpen},
               </if>
-              <if test="releaseDate != null">
-                  #{releaseDate},
+              <if test="createTime != null">
+                  #{TIME },
+              </if>
+              <if test="modifiedTime!= null">
+                  #{modifiedTime},
               </if>
               <if test="content != null">
                   #{content}
               </if>
           </trim>
-
     </insert>
-    
-    <select id="findArticleList" resultMap="BaseResultMap">
+    <select id="countByParams" resultType="java.lang.Integer"
+            parameterType="java.util.Map">
+        select COUNT(*) FROM article
+    </select>
+    <select id="selectByAll" resultMap="BaseResultMap">
         select
         <include refid="base_sql" />
         FROM article
@@ -166,9 +175,7 @@
             <if test="idOpen != null">
                 is_open = #{idOpen},
             </if>
-            <if test="releaseDate != null">
-                release_Date = #{releaseDate},
-            </if>
+
             <if test="content != null">
                 content = #{content}
             </if>

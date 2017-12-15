@@ -7,21 +7,20 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>博客管理系统</title>
-<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="css/style.css">
-<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
-<link rel="apple-touch-icon-precomposed" href="images/icon/icon.png">
-<link rel="shortcut icon" href="images/icon/favicon.ico">
-<script src="js/jquery-2.1.4.min.js"></script>
-  <script src="js/jquery-1.11.1.min.js" type="text/javascript"></script>
-  <script src="js/html5shiv.min.js" type="text/javascript"></script>
-  <script src="js/respond.min.js" type="text/javascript"></script>
-  <script src="js/selectivizr-min.js" type="text/javascript"></script>
+  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/style.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/font-awesome.min.css">
+<link rel="apple-touch-icon-precomposed" href="${pageContext.request.contextPath}/images/icon/icon.png">
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/images/icon/favicon.ico">
+<script src="${pageContext.request.contextPath}/js/jquery-2.1.4.min.js"></script>
+  <script src="${pageContext.request.contextPath}/js/html5shiv.min.js" type="text/javascript"></script>
+  <script src="${pageContext.request.contextPath}/js/respond.min.js" type="text/javascript"></script>
+  <script src="${pageContext.request.contextPath}/js/selectivizr-min.js" type="text/javascript"></script>
 <!--[if gte IE 9]>
 
 <![endif]-->
 <!--[if lt IE 9]>
-  <script>window.location.href='upgrade-browser.html';</script>
+  <script>window.location.href='upgrade-browser';</script>
 <![endif]-->
 </head>
 
@@ -36,7 +35,7 @@
       <div class="container-fluid">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"> <span class="sr-only">切换导航</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-          <a class="navbar-brand" href="/">YlsatCMS</a> </div>
+          <a class="navbar-brand" href="${pageContext.request.contextPath}/index">Yan</a> </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-right">
             <li><a href="">消息 <span class="badge">1</span></a></li>
@@ -46,7 +45,7 @@
                 <li><a title="查看您的登录记录" data-toggle="modal" data-target="#seeUserLoginlog">登录记录</a></li>
               </ul>
             </li>
-            <li><a href="login.html" onClick="if(!confirm('是否确认退出？'))return false;">退出登录</a></li>
+            <li><a href="${pageContext.request.contextPath}/login" onClick="if(!confirm('是否确认退出？'))return false;">退出登录</a></li>
             <li><a data-toggle="modal" data-target="#WeChat">帮助</a></li>
           </ul>
           <form action="" method="post" class="navbar-form navbar-right" role="search">
@@ -63,19 +62,19 @@
   <div class="row">
     <aside class="col-sm-3 col-md-2 col-lg-2 sidebar">
       <ul class="nav nav-sidebar">
-        <li class="active"><a href="index.html">报告</a></li>
+        <li class="active"><a href="${pageContext.request.contextPath}/index">报告</a></li>
       </ul>
       <ul class="nav nav-sidebar">
-        <li><a href="${contextPath}/article">文章</a></li>
-        <li><a href="notice.html">公告</a></li>
-        <li><a href="comment.html">评论</a></li>
+        <li><a href="${pageContext.request.contextPath}/article">文章</a></li>
+        <li><a href="${pageContext.request.contextPath}/notice">公告</a></li>
+        <li><a href="${pageContext.request.contextPath}/comment">评论</a></li>
         <li><a data-toggle="tooltip" data-placement="bottom" title="网站暂无留言功能">留言</a></li>
       </ul>
       <ul class="nav nav-sidebar">
-        <li><a href="${contextPath}/category">栏目</a></li>
+        <li><a href="${pageContext.request.contextPath}/category/getAllCategory">栏目</a></li>
         <li><a class="dropdown-toggle" id="otherMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">其他</a>
           <ul class="dropdown-menu" aria-labelledby="otherMenu">
-            <li><a href="flink.html">友情链接</a></li>
+            <li><a href="${pageContext.request.contextPath}/flink">友情链接</a></li>
             <li><a data-toggle="modal" data-target="#areDeveloping">访问记录</a></li>
           </ul>
         </li>
@@ -84,15 +83,15 @@
         <li><a class="dropdown-toggle" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">用户</a>
           <ul class="dropdown-menu" aria-labelledby="userMenu">
             <li><a data-toggle="modal" data-target="#areDeveloping">管理用户组</a></li>
-            <li><a href="manage-user.html">管理用户</a></li>
+            <li><a href="${pageContext.request.contextPath}/user/getAllUser">管理用户</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="loginlog.html">管理登录日志</a></li>
+            <li><a href="${pageContext.request.contextPath}/loginlog">管理登录日志</a></li>
           </ul>
         </li>
         <li><a class="dropdown-toggle" id="settingMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">设置</a>
           <ul class="dropdown-menu" aria-labelledby="settingMenu">
-            <li><a href="setting.html">基本设置</a></li>
-            <li><a href="readset.html">阅读设置</a></li>
+            <li><a href="${pageContext.request.contextPath}/setting">基本设置</a></li>
+            <li><a href="${pageContext.request.contextPath}/readset">阅读设置</a></li>
             <li role="separator" class="divider"></li>
             <li><a data-toggle="modal" data-target="#areDeveloping">安全配置</a></li>
             <li role="separator" class="divider"></li>
@@ -106,7 +105,7 @@
       <div class="row placeholders">
         <div class="col-xs-6 col-sm-3 placeholder">
           <h4>文章</h4>
-          <span class="text-muted">0 条</span> </div>
+          <span class="text-muted">0 篇</span> </div>
         <div class="col-xs-6 col-sm-3 placeholder">
           <h4>评论</h4>
           <span class="text-muted">0 条</span> </div>
@@ -163,7 +162,7 @@
             </tr>
             <tr>
               <td>程序版本:</td>
-              <td class="version">YlsatCMS 1.0 <font size="-6" color="#BBB">(20160108160215)</font></td>
+              <td class="version">Yan 1.0 <font size="-6" color="#BBB">(20160108160215)</font></td>
               <td>上传文件:</td>
               <td>可以 <font size="-6" color="#BBB">(最大文件：2M ，表单：8M )</font></td>
             </tr>

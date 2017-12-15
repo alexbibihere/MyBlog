@@ -8,7 +8,7 @@
 <meta name="renderer" content="webkit">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>文章 - 异清轩博客管理系统</title>
+<title>文章 </title>
   <script src="${path}/js/jquery-2.1.4.min.js"></script>
 <link rel="stylesheet" type="text/css" href="${path}/css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="${path}/css/style.css">
@@ -40,11 +40,11 @@
           case "first":
             return "第一页";
           case "prev":
-            return "前一页";
+            return "<上一页";
           case "next":
-            return "后一页";
+            return "下一页>";
           case "last":
-            return "最后页";
+            return "最后一页";
           case "page":
             return  page;
         }
@@ -63,7 +63,7 @@
 
     //生成表格
     function buildTable(pageNo,pageSize) {
-      var url = "${pageContext.request.contextPath}/article/findList"; //请求的网址
+      var url = "${pageContext.request.contextPath}/article/select"; //请求的网址
       var reqParams = {'pageNo':pageNo,'pageSize':pageSize};//请求数据
       $(function () {
         $.ajax({
@@ -86,11 +86,11 @@
                     case "first":
                       return "第一页";
                     case "prev":
-                      return "前一页";
+                      return "<上一页";
                     case "next":
-                      return "后一页";
+                      return "下一页>";
                     case "last":
-                      return "最后页";
+                      return "最后一页";
                     case "page":
                       return  page;
                   }
@@ -106,6 +106,7 @@
               var dataList = data.dataList;
               $("#ArticleList").empty();//清空表格内容
               if (dataList.length > 0 ) {
+                  $("#count").html("this.count");
                 $(dataList).each(function(){//重新生成
                   if(this.isDel != 1){
                     $("#ArticleList").append("<tr>");
@@ -114,9 +115,9 @@
                     $("#ArticleList").append('<td>' + this.column + '</td>');
                     $('<td>' + this.label + '</td>').addClass("hidden-sm").appendTo($('#ArticleList'));
                     $("#ArticleList").append('<td class="hidden-sm">' + 0 + '</td>').addClass("hidden-sm");
-                    $("#ArticleList").append('<td>' + this.releaseDate + '</td>');
-                    $("#ArticleList").append("<a href='${pageContext.request.contextPath}/article/get?id="+this.id+"'>修改</a>" +
-                          "<a href='javascript:void(0);' onclick='deleteMethod("+this.id+")'>删除</a></td>");
+                    $("#ArticleList").append('<td>' + this.modifiedTime + '</td>');
+                    $("#ArticleList").append("<a href='${pageContext.request.contextPath}/article/get?id="+this.id+"'>修改</a>" +"&nbsp;"
++                          "<a href='javascript:void(0);' onclick='deleteMethod("+this.id+")'>删除</a></td>");
                     $("#ArticleList").append("</tr>");
                   }
                 });
@@ -159,7 +160,7 @@
       <div class="container-fluid">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"> <span class="sr-only">切换导航</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-          <a class="navbar-brand" href="/">YlsatCMS</a> </div>
+          <a class="navbar-brand" href="${contextPath}/index">Yan</a> </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-right">
             <li><a href="">消息 <span class="badge">1</span></a></li>
@@ -169,11 +170,11 @@
                 <li><a title="查看您的登录记录" data-toggle="modal" data-target="#seeUserLoginlog">登录记录</a></li>
               </ul>
             </li>
-            <li><a href="login.html" onClick="if(!confirm('是否确认退出？'))return false;">退出登录</a></li>
+            <li><a href="${contextPath}/login" onClick="if(!confirm('是否确认退出？'))return false;">退出登录</a></li>
             <li><a data-toggle="modal" data-target="#WeChat">帮助</a></li>
           </ul>
           <form action="" method="post" class="navbar-form navbar-right" role="search">
-            <div class="input-group">
+              <div class="input-group">
               <input type="text" class="form-control" autocomplete="off" placeholder="键入关键字搜索" maxlength="15">
               <span class="input-group-btn">
               <button class="btn btn-default" type="submit">搜索</button>
@@ -186,36 +187,35 @@
   <div class="row">
     <aside class="col-sm-3 col-md-2 col-lg-2 sidebar">
       <ul class="nav nav-sidebar">
-        <li><a href="index.html">报告</a></li>
+        <li><a href="${contextPath}/index">报告</a></li>
       </ul>
       <ul class="nav nav-sidebar">
         <li class="active"><a href="${contextPath}/article">文章</a></li>
-        <li><a href="notice.html">公告</a></li>
-        <li><a href="comment.html">评论</a></li>
+        <li><a href="${contextPath}/notice">公告</a></li>
+        <li><a href="${contextPath}/comment">评论</a></li>
         <li><a data-toggle="tooltip" data-placement="top" title="网站暂无留言功能">留言</a></li>
       </ul>
       <ul class="nav nav-sidebar">
-        <li><a href="category.html">栏目</a></li>
+        <li><a href="${contextPath}/category/getAllCategory">栏目</a></li>
         <li><a class="dropdown-toggle" id="otherMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">其他</a>
           <ul class="dropdown-menu" aria-labelledby="otherMenu">
-            <li><a href="flink.html">友情链接</a></li>
-            <li><a href="loginlog.html">访问记录</a></li>
+            <li><a href="${contextPath}/flink">友情链接</a></li>
+            <li><a href="${contextPath}/loginlog">访问记录</a></li>
           </ul>
         </li>
       </ul>
       <ul class="nav nav-sidebar">
         <li><a class="dropdown-toggle" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">用户</a>
           <ul class="dropdown-menu" aria-labelledby="userMenu">
-            <li><a href="#">管理用户组</a></li>
-            <li><a href="manage-user.html">管理用户</a></li>
+            <li><a href="${contextPath}/user/getAllUser">管理用户</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="loginlog.html">管理登录日志</a></li>
+            <li><a href="${contextPath}/loginlog">管理登录日志</a></li>
           </ul>
         </li>
         <li><a class="dropdown-toggle" id="settingMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">设置</a>
           <ul class="dropdown-menu" aria-labelledby="settingMenu">
-            <li><a href="setting.html">基本设置</a></li>
-            <li><a href="readset.html">用户设置</a></li>
+            <li><a href="${contextPath}/setting">基本设置</a></li>
+            <li><a href="${contextPath}/readset">用户设置</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="#">安全配置</a></li>
             <li role="separator" class="divider"></li>
@@ -228,9 +228,9 @@
       <form action="" method="post" >
         <h1 class="page-header">操作</h1>
         <ol class="breadcrumb">
-          <li><a href="add-article.html">增加文章</a></li>
+          <li><a href="${contextPath}/add-article" class="btn btn-primary">增加文章</a></li>
         </ol>
-        <h1 class="page-header">管理 <span class="badge">7</span></h1>
+        <h1 class="page-header" >管理 <span class="badge" id="count"></span></h1>
         <div class="table-responsive">
           <table class="table table-striped table-hover">
             <thead>
@@ -408,6 +408,12 @@
   </ul>
 </div>
 <script type="application/javascript">
+    $(document).ready(function(){
+        $.ajax(function () {
+       type:"GET";
+       url:"${pageContext.request.contextPath}/";
+        })
+    });
 //是否确认删除
 /*$(function() {
 });*/

@@ -1,15 +1,27 @@
 package com.blog.dao;
 
 import com.blog.pojo.User;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
-/**
- * Created by Administrator on 2017/7/12.
- */
-@Repository
+
 public interface UserMapper {
+    int deleteByPrimaryKey(Integer id);
 
-     List<User> findUserAll();
+    int insert(User record);
+
+    Integer insertSelective(User record);
+
+
+    User selectByPrimaryKey(Integer id);
+
+    int updateByPrimaryKeySelective(User record);
+
+    int updateByPrimaryKey(User record);
+    int deleteByPrimaryKey(int id);
+
+    List<User> selectByParams (Map<String,Object> params);
+    List<User> selectByAll();
+    int countByParams(Map<String, Object> params);
 }

@@ -6,7 +6,7 @@
 <meta name="renderer" content="webkit">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>修改栏目 - 异清轩博客管理系统</title>
+<title>修改栏目 </title>
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 <link rel="stylesheet" type="text/css" href="css/style.css">
 <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
@@ -31,7 +31,7 @@
       <div class="container-fluid">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"> <span class="sr-only">切换导航</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-          <a class="navbar-brand" href="/">YlsatCMS</a> </div>
+          <a class="navbar-brand" href="${pageContext.request.contextPath}/index">Yan</a> </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-right">
             <li><a href="">消息 <span class="badge">1</span></a></li>
@@ -78,8 +78,7 @@
       <ul class="nav nav-sidebar">
         <li><a class="dropdown-toggle" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">用户</a>
           <ul class="dropdown-menu" aria-labelledby="userMenu">
-            <li><a href="#">管理用户组</a></li>
-            <li><a href="manage-user.html">管理用户</a></li>
+            <li><a href="${pageContext.request.contextPath}/user/getAllUser">管理用户</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="loginlog.html">管理登录日志</a></li>
           </ul>
@@ -98,7 +97,7 @@
     </aside>
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-lg-10 col-md-offset-2 main" id="main">
       <h1 class="page-header">修改栏目</h1>
-      <form action="/Category/update" method="post">
+      <form action="/category/getAllCategory/update" method="post">
         <div class="form-group">
           <label for="category-name">栏目名称</label>
           <input type="text" id="category-name" name="name" value="前端技术" class="form-control" placeholder="在此处输入栏目名称" required autocomplete="off">

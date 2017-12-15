@@ -1,4 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set value="${pageContext.request.contextPath}" var="path" scope="page" />
+<%
+  String contextPath = request.getContextPath();
+  request.setAttribute("contextPath",contextPath);
+%>
 <!doctype html>
 <html lang="zh-CN">
 <head>
@@ -6,22 +12,140 @@
 <meta name="renderer" content="webkit">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>栏目 - 异清轩博客管理系统</title>
-<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="css/style.css">
-<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
-<link rel="apple-touch-icon-precomposed" href="images/icon/icon.png">
-<link rel="shortcut icon" href="images/icon/favicon.ico">
-<script src="js/jquery-2.1.4.min.js"></script>
+<title>栏目 </title>
+<link rel="stylesheet" type="text/css" href="${contextPath}/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="${contextPath}/css/style.css">
+<link rel="stylesheet" type="text/css" href="${contextPath}/css/font-awesome.min.css">
+<link rel="apple-touch-icon-precomposed" href="${contextPath}/images/icon/icon.png">
+<link rel="shortcut icon" href="${contextPath}/images/icon/favicon.ico">
+<script src="${contextPath}/js/jquery-2.1.4.min.js"></script>
+  <script src="${path}/js/bootstrap-paginator.min.js"></script>
+  <script src="${path}/js/bootstrap-paginator.js" type="text/javascript"></script>
 <!--[if gte IE 9]>
-  <script src="js/jquery-1.11.1.min.js" type="text/javascript"></script>
-  <script src="js/html5shiv.min.js" type="text/javascript"></script>
-  <script src="js/respond.min.js" type="text/javascript"></script>
-  <script src="js/selectivizr-min.js" type="text/javascript"></script>
+  <script src="${contextPath}/js/jquery-1.11.1.min.js" type="text/javascript"></script>
+  <script src="${contextPath}/js/html5shiv.min.js" type="text/javascript"></script>
+  <script src="${contextPath}/js/respond.min.js" type="text/javascript"></script>
+  <script src="${contextPath}/js/selectivizr-min.js" type="text/javascript"></script>
 <![endif]-->
 <!--[if lt IE 9]>
   <script>window.location.href='upgrade-browser.html';</script>
 <![endif]-->
+  <%--<script type="application/javascript">
+      var PAGESIZE = 10;
+      var options = {
+          currentPage: 1,  //当前页数
+          totalPages: 10,  //总页数，这里只是暂时的，后头会根据查出来的条件进行更改
+          numberOfPages:5,
+          size:"normal",
+          alignment:"andright",
+          itemTexts: function (type, page, current) {
+              switch (type) {
+                  case "first":
+                      return "第一页";
+                  case "prev":
+                      return "上一页";
+                  case "next":
+                      return "下一页";
+                  case "last":
+                      return "最后一页";
+                  case "page":
+                      return  page;
+              }
+          },
+          onPageClicked: function (e, originalEvent, type, page) {
+              buildTable(page,PAGESIZE);//默认每页最多10条
+          }
+      }
+
+      //获取当前项目的路径
+      var urlRootContext = (function () {
+          var strPath = window.document.location.pathname;
+          var postPath = strPath.substring(0, strPath.substr(1).indexOf('/') + 1);
+          return postPath;
+      })();
+
+      //生成表格
+      function buildTable(pageNo,pageSize) {
+          var reqParams = {'pageNo':pageNo,'pageSize':pageSize};//请求数据
+          $(function () {
+              $.ajax({
+                  type:"POST",
+                  url:"${pageContext.request.contextPath}/category/getAllCategory",
+                  data:reqParams,
+                  async:false,
+                  dataType:"json",
+                  success: function(data){
+                      if(data.isError == false) {
+                          // options.totalPages = data.pages;
+                          var newoptions = {
+                              currentPage: 1,  //当前页数
+                              totalPages: data.pages==0?1:data.pages,  //总页数
+                            /*numberOfPages:data.pages==0?1:data.pages,*/
+                              size:"normal",
+                              alignment:"andright",
+                              itemTexts: function (type, page,current) {
+                                  switch (type) {
+                                      case "first":
+                                          return "第一页";
+                                      case "prev":
+                                          return "上一页";
+                                      case "next":
+                                          return "下一页";
+                                      case "last":
+                                          return "最后一页";
+                                      case "page":
+                                          return  page;
+                                  }
+                              },
+                            /*点击事件，用于听过Ajax来刷新整个list列表*/
+                              onPageClicked: function (e, originalEvent, type, page) {
+                                  buildTable(page,PAGESIZE);//默认每页最多10条
+                              }
+                          }
+
+                          $('#bottomTab').bootstrapPaginator(newoptions); //重新设置总页面数目
+
+                          var dataList = data.dataList;
+                          $("#CategoryList").empty();//清空表格内容
+                          if (dataList.length > 0 ) {
+                              $(dataList).each(function(){//重新生成
+                                  if(this.isDeleted != 1){
+                                      $("#CategoryList").append("<tr>");
+                                      $('<td><input type="checkbox" name="checkbox[]" value="" /></td>').appendTo('#CategoryList');
+                                      $('<td>' + this.id + '</td>').appendTo($('#CategoryList'));
+                                      $('<td>' + this.title + '</td>').appendTo($('#CategoryList'));
+                                      $("#CategoryList").append('<td>' + this.alias + '</td>');
+                                      $("#CategoryList").append("<a href='javascript:void(0);' onclick='getNotice("+this.id+")'>修改</a>");
+                                      $("#CategoryList").append("<a href='javascript:void(0);' onclick='deleteMethod("+this.id+")'>删除</a></td>");
+                                      $("#CategoryList").append("</tr>");
+                                  }
+                              });
+                          } else {
+                              $("#CategoryList").append('<tr><th colspan ="7"><center>查询无数据</center></th></tr>');
+                          }
+                      }else{
+                          alert(data.errorMsg);
+                      }
+                  },
+                  error:function (e) {
+                      alert("查询失敗"+e);
+                  }
+              });
+          });
+      }
+      //渲染完就执行
+      $(function() {
+          //生成底部分页栏
+          $('.bottomTab').bootstrapPaginator(options);
+          buildTable(1,10);//默认空白查全部
+
+        /*//查询使用
+         $("#queryButton").bind("click",function(){
+         buildTable(1,PAGESIZE);
+         });*/
+
+      });
+  </script>--%>
 </head>
 
 <body class="user-select">
@@ -31,7 +155,7 @@
       <div class="container-fluid">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"> <span class="sr-only">切换导航</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-          <a class="navbar-brand" href="/">YlsatCMS</a> </div>
+          <a class="navbar-brand" href="${contextPath}/index">Yan</a> </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-right">
             <li><a href="">消息 <span class="badge">1</span></a></li>
@@ -41,7 +165,7 @@
                 <li><a title="查看您的登录记录" data-toggle="modal" data-target="#seeUserLoginlog">登录记录</a></li>
               </ul>
             </li>
-            <li><a href="login.html" onClick="if(!confirm('是否确认退出？'))return false;">退出登录</a></li>
+            <li><a href="${contextPath}/login" onClick="if(!confirm('是否确认退出？'))return false;">退出登录</a></li>
             <li><a data-toggle="modal" data-target="#WeChat">帮助</a></li>
           </ul>
           <form action="" method="post" class="navbar-form navbar-right" role="search">
@@ -58,36 +182,35 @@
   <div class="row">
     <aside class="col-sm-3 col-md-2 col-lg-2 sidebar">
       <ul class="nav nav-sidebar">
-        <li><a href="index.html">报告</a></li>
+        <li><a href="${contextPath}/index">报告</a></li>
       </ul>
       <ul class="nav nav-sidebar">
-        <li><a href="article.html">文章</a></li>
-        <li><a href="notice.html">公告</a></li>
-        <li><a href="comment.html">评论</a></li>
+        <li><a href="${contextPath}/article">文章</a></li>
+        <li><a href="${contextPath}/notice">公告</a></li>
+        <li><a href="${contextPath}/comment">评论</a></li>
         <li><a data-toggle="tooltip" data-placement="top" title="网站暂无留言功能">留言</a></li>
       </ul>
       <ul class="nav nav-sidebar">
-        <li class="active"><a href="category.html">栏目</a></li>
+        <li class="active"><a href="${contextPath}/category/getAllCategory">栏目</a></li>
         <li><a class="dropdown-toggle" id="otherMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">其他</a>
           <ul class="dropdown-menu" aria-labelledby="otherMenu">
-            <li><a href="flink.html">友情链接</a></li>
-            <li><a href="loginlog.html">访问记录</a></li>
+            <li><a href="${contextPath}/flink">友情链接</a></li>
+            <li><a href="${contextPath}/loginlog">访问记录</a></li>
           </ul>
         </li>
       </ul>
       <ul class="nav nav-sidebar">
         <li><a class="dropdown-toggle" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">用户</a>
           <ul class="dropdown-menu" aria-labelledby="userMenu">
-            <li><a href="#">管理用户组</a></li>
-            <li><a href="manage-user.html">管理用户</a></li>
+            <li><a href="${contextPath}/user/getAllUser">管理用户</a></li>
             <li role="separator" class="divider"></li>
-            <li><a href="loginlog.html">管理登录日志</a></li>
+            <li><a href="${contextPath}/loginlog">管理登录日志</a></li>
           </ul>
         </li>
         <li><a class="dropdown-toggle" id="settingMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">设置</a>
           <ul class="dropdown-menu" aria-labelledby="settingMenu">
-            <li><a href="setting.html">基本设置</a></li>
-            <li><a href="readset.html">用户设置</a></li>
+            <li><a href="${contextPath}/setting">基本设置</a></li>
+            <li><a href="${contextPath}/readset">用户设置</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="#">安全配置</a></li>
             <li role="separator" class="divider"></li>
@@ -100,10 +223,10 @@
       <div class="row">
         <div class="col-md-5">
           <h1 class="page-header">添加</h1>
-          <form action="/Category/add" method="post" autocomplete="off">
+          <form action="" id="addCate" method="post" autocomplete="off">
             <div class="form-group">
               <label for="category-name">栏目名称</label>
-              <input type="text" id="category-name" name="name" class="form-control" placeholder="在此处输入栏目名称" required autocomplete="off">
+              <input type="text" id="category-name" name="title" class="form-control" placeholder="在此处输入栏目名称" required autocomplete="off">
               <span class="prompt-text">这将是它在站点上显示的名字。</span> </div>
             <div class="form-group">
               <label for="category-alias">栏目别名</label>
@@ -111,13 +234,13 @@
               <span class="prompt-text">“别名”是在URL中使用的别称，它可以令URL更美观。通常使用小写，只能包含字母，数字和连字符（-）。</span> </div>
             <div class="form-group">
               <label for="category-fname">父节点</label>
-              <select id="category-fname" class="form-control" name="fid">
-                <option value="0" selected>无</option>
-                <option value="1">前端技术</option>
-                <option value="2">后端程序</option>
-                <option value="3">管理系统</option>
-                <option value="4">授人以渔</option>
-                <option value="5">程序人生</option>
+              <select id="category-fname" class="form-control" name="fname">
+                <option value="无" selected>无</option>
+                <option value="前端技术">前端技术</option>
+                <option value="后端程序">后端程序</option>
+                <option value="管理系统">管理系统</option>
+                <option value="授人以渔">授人以渔</option>
+                <option value="程序人生">程序人生</option>
               </select>
               <span class="prompt-text">栏目是有层级关系的，您可以有一个“音乐”分类目录，在这个目录下可以有叫做“流行”和“古典”的子目录。</span> </div>
             <div class="form-group">
@@ -126,13 +249,13 @@
               <span class="prompt-text">关键字会出现在网页的keywords属性中。</span> </div>
             <div class="form-group">
               <label for="category-describe">描述</label>
-              <textarea class="form-control" id="category-describe" name="describe" rows="4" autocomplete="off"></textarea>
+              <textarea class="form-control" id="category-describe" name="description" rows="4" autocomplete="off"></textarea>
               <span class="prompt-text">描述会出现在网页的description属性中。</span> </div>
-            <button class="btn btn-primary" type="submit" name="submit">添加新栏目</button>
+            <button class="btn btn-primary" id="addCategorybtn"  name="submit">添加新栏目</button>
           </form>
         </div>
         <div class="col-md-7">
-          <h1 class="page-header">管理 <span class="badge">3</span></h1>
+          <h1 class="page-header">管理 <span class="badge">${count}</span></h1>
           <div class="table-responsive">
             <table class="table table-striped table-hover">
               <thead>
@@ -140,46 +263,23 @@
                   <th><span class="glyphicon glyphicon-paperclip"></span> <span class="visible-lg">ID</span></th>
                   <th><span class="glyphicon glyphicon-file"></span> <span class="visible-lg">名称</span></th>
                   <th><span class="glyphicon glyphicon-list-alt"></span> <span class="visible-lg">别名</span></th>
-                  <th><span class="glyphicon glyphicon-pushpin"></span> <span class="visible-lg">总数</span></th>
+                  <th><span class="glyphicon glyphicon-pushpin"></span> <span class="visible-lg">父节点</span></th>
                   <th><span class="glyphicon glyphicon-pencil"></span> <span class="visible-lg">操作</span></th>
                 </tr>
               </thead>
-              <tbody>
-                <tr>
-                  <td>1</td>
-                  <td>前端技术</td>
-                  <td>web</td>
-                  <td>125</td>
-                  <td><a href="update-category.html">修改</a> <a rel="1">删除</a></td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>后端程序</td>
-                  <td>program</td>
-                  <td>185</td>
-                  <td><a href="update-category.html">修改</a> <a rel="2">删除</a></td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>管理系统</td>
-                  <td>cms</td>
-                  <td>223</td>
-                  <td><a href="update-category.html">修改</a> <a rel="3">删除</a></td>
-                </tr>
-                <tr>
-                  <td>4</td>
-                  <td>授人以渔</td>
-                  <td>tutorial</td>
-                  <td>12</td>
-                  <td><a href="update-category.html">修改</a> <a rel="4">删除</a></td>
-                </tr>
-                <tr>
-                  <td>5</td>
-                  <td>程序人生</td>
-                  <td>code</td>
-                  <td>35</td>
-                  <td><a href="update-category.html">修改</a> <a rel="5">删除</a></td>
-                </tr>
+              <tbody id="categoryList">
+              <c:if test="${!empty categoryList}">
+                <c:forEach var="category" items="${categoryList}">
+                  <tr>
+                    <td >  ${category.id} &nbsp;&nbsp;<br></td>
+                    <td >  ${category.title} &nbsp;&nbsp;<br></td>
+                    <td>  ${category.alias} &nbsp;&nbsp;<br>
+                    <td>${category.fname}</td>
+                    <td ><button class="btn btn-primary editbtn" id="${category.id}" >修改</button>
+                      <a class="btn btn-danger" href='javascript:void(0);' onclick='deleteCategory(${category.id})'> 删除</a></td>
+                  </tr>
+                </c:forEach>
+              </c:if>
               </tbody>
             </table>
             <span class="prompt-text"><strong>注：</strong>删除一个栏目也会删除栏目下的文章和子栏目,请谨慎删除!</span> </div>
@@ -296,7 +396,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="WeChatModalLabel" style="cursor:default;">微信扫一扫</h4>
       </div>
-      <div class="modal-body" style="text-align:center"> <img src="images/weixin.jpg" alt="" style="cursor:pointer"/> </div>
+      <div class="modal-body" style="text-align:center"> <img src="${contextPath}/images/weixin.jpg" alt="" style="cursor:pointer"/> </div>
     </div>
   </div>
 </div>
@@ -308,13 +408,70 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="areDevelopingModalLabel" style="cursor:default;">该功能正在日以继夜的开发中…</h4>
       </div>
-      <div class="modal-body"> <img src="images/baoman/baoman_01.gif" alt="深思熟虑" />
+      <div class="modal-body"> <img src="${contextPath}/images/baoman/baoman_01.gif" alt="深思熟虑" />
         <p style="padding:15px 15px 15px 100px; position:absolute; top:15px; cursor:default;">很抱歉，程序猿正在日以继夜的开发此功能，本程序将会在以后的版本中持续完善！</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-dismiss="modal">朕已阅</button>
       </div>
     </div>
+  </div>
+</div>
+<!--修改栏目模态框 -->
+<div class="modal fade" id="editCategoryModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <form action="" method="post">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" >修改栏目</h4>
+        </div>
+        <div class="modal-body">
+          <table class="table" style="margin-bottom:0px;">
+            <thead>
+            <tr> </tr>
+            </thead>
+            <tbody>
+            <div class="">
+              <td wdith="20%"><label class=" form-control-static">栏目名称</label>:</td>
+              <td width="80%"> <p  class="form-control-static" name="title" id="title"></p></td>
+            </div>
+            <tr>
+              <td wdith="20%">栏目别名:</td>
+              <td width="80%"><input type="text" NAME="alias" class="form-control" id="alias" maxlength="10" autocomplete="off" /></td>
+            </tr>
+            <tr>
+              <td wdith="20%">父节点:</td>
+              <td width="80%">
+                <select  class="form-control" name="fname" id="fname">
+                  <option value="无" >无</option>
+                  <option value="前端技术">前端技术</option>
+                  <option value="后端程序">后端程序</option>
+                  <option value="管理系统">管理系统</option>
+                  <option value="授人以渔">授人以渔</option>
+                  <option value="程序人生">程序人生</option>
+                </select></td>
+            </tr>
+            <tr>
+              <td wdith="20%">关键字:</td>
+              <td width="80%"><input type="text" class="form-control" name="keywords" id="keywords" maxlength="18" autocomplete="off" /></td>
+            </tr>
+            <tr>
+              <td wdith="20%">描述:</td>
+              <td width="80%"><textarea class="form-control" id="description" name="description" rows="4" autocomplete="off"></textarea></td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr></tr>
+            </tfoot>
+          </table>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+          <button type="submit" class="btn btn-primary"  id="saveCategory">提交</button>
+        </div>
+      </div>
+    </form>
   </div>
 </div>
 <!--右键菜单列表-->
@@ -327,31 +484,84 @@
     <li class="list-group-item"><span>浏览器：</span>Chrome47</li>
   </ul>
 </div>
-<script src="js/bootstrap.min.js"></script> 
-<script src="js/admin-scripts.js"></script> 
-<script>
-//是否确认删除
-$(function(){   
-	$("#main table tbody tr td a").click(function(){
-		var name = $(this);
-		var id = name.attr("rel"); //对应id  
-		if (event.srcElement.outerText === "删除") 
-		{
-			if(window.confirm("此操作不可逆，是否确认？"))
-			{
-				$.ajax({
-					type: "POST",
-					url: "/Category/delete",
-					data: "id=" + id,
-					cache: false, //不缓存此页面   
-					success: function (data) {
-						window.location.reload();
-					}
-				});
-			};
-		};
-	});   
-});
+<script src="${contextPath}/js/bootstrap.min.js"></script>
+<script src="${contextPath}/js/admin-scripts.js"></script>
+<script type="application/javascript">
+
+    //添加栏目
+    $("#addCategorybtn").click(function () {
+       $.ajax({
+       type:"POST",
+       url:"${pageContext.request.contextPath}/category/add",
+       data:$("#addCate").serialize(),
+       success:function (result) {
+       window.location.reload();
+       }
+       })
+    });
+
+    //绑定编辑按钮  弹出模态框 填充数据 修改保存数据
+    $(document).on("click",".editbtn",function(){
+        getCategory($(this).attr("id"));
+        $('#editCategoryModal').modal({
+            backdrop : "static"
+        });
+    });
+
+    //查询栏目 用于修改模态框
+    function getCategory(id) {
+        $.ajax({
+            type:"GET",
+            url:"${pageContext.request.contextPath}/category/getCategory",
+            data:"id="+id,
+            success:function (result) {
+                //console.log(result);
+                var category = result.map.category;
+                $("#title").text(category.title);
+                $("#alias").val(category.alias);
+                $("#editCategoryModal select ").val([category.fname]);
+                $("#keywords").val(category.keywords);
+                $("#description").val(category.description);
+                $("#saveCategory").attr("id",category.id);
+                $("#editCategoryModal").modal({
+                    backdrop:"static"
+                });
+            }
+        })
+    }
+
+    //保存编辑内容
+    $("#saveCategory").click(function () {
+        $.ajax({
+            type:"POST",
+            url:"${pageContext.request.contextPath}/category/update/"+$(this).attr("id"),
+            data:$("#editCategoryModal form").serialize(),
+            success:function (result) {
+                alert(result.msg);
+            }
+        })
+        }
+    );
+
+    //删除栏目
+    function deleteCategory(id) {
+        if (event.srcElement.outerText === "删除")
+        {
+            if(window.confirm("此操作不可逆，是否确认？"))
+            {
+                $.ajax({
+                    type: "POST",
+                    url: "${pageContext.request.contextPath}/category/delete",
+                    data: "id=" + id,
+                    cache: false, //不缓存此页面
+                    success: function (data) {
+                        window.location.reload();
+                    }
+                });
+            };
+        };
+}
+
 </script>
 </body>
 </html>

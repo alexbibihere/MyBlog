@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2017/7/14.
@@ -29,13 +30,13 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public PageResult<Article> findArticleList(Integer pageNo, Integer pageSize) {
+    public PageResult<Article> selectByAll(Integer pageNo, Integer pageSize) {
 
         pageNo = pageNo == null?1:pageNo;
         pageSize = pageSize == null?10:pageSize;
         //startPage是告诉拦截器说我要开始分页了。分页参数是这两个。
         PageHelper.startPage(pageNo,pageSize);
-        return BeanUtil.toPageResult(articleMapper.findArticleList());
+        return BeanUtil.toPageResult(articleMapper.selectByAll());
     }
 
     @Override
@@ -58,5 +59,17 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public void updateArticle(Article article) {
         articleMapper.updateArticle(article);
+    }
+
+    @Override
+    public List<Article> selectByParams (Map<String, Object> params){
+        List<Article> articleList =  articleMapper.selectByParams(params);
+        return articleList;
+    }
+
+    @Override
+    public int countByParams(Map<String, Object> params) {
+        int count = articleMapper.countByParams(params);
+        return count;
     }
 }

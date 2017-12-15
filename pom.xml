@@ -72,7 +72,7 @@
             <artifactId>ueditor</artifactId>
             <version>1.1.2</version>
             <scope>system</scope>
-            <systemPath>D:/MavenTest/repository/com/baidu/ueditor-1.1.2.jar</systemPath>
+            <systemPath>D:/Develop/repository/com/baidu/ueditor-1.1.2.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>org.apache.maven.plugins</groupId>

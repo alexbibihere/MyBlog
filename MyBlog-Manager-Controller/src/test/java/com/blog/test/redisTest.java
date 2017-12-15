@@ -34,11 +34,11 @@ public class redisTest {
         System.out.print(name);
     }
 
-    @Test
+   /* @Test
     public void testUsers(){
 
-        List<User> userList = userService.findAllUser();
+        List<User> userList = userService.selectByAll(null,n);
 
         System.out.print(userList.toString());
-    }
+    }*/
 }
