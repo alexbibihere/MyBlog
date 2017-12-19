@@ -27,7 +27,7 @@
         order by create_time desc limit 5
     </select>
     <select id="selectByParams" parameterType="java.util.Map" resultMap="BaseResultMap">
-        select  * from article
+        select  * from article where is_del=0
     </select>
     <insert id="insertArticle" parameterType="com.blog.pojo.Article">
             insert into article
@@ -132,11 +132,7 @@
 
     <!-- 假删除,设置删除字段值 -->
     <update id="deleteArticle" parameterType="com.blog.pojo.Article" >
-       UPDATE article
-          <if test="isDel != null">
-              set is_del=#{isDel}
-          </if>
-        WHERE id = #{id}
+       UPDATE article   set is_del= 1   WHERE id = #{id}
     </update>
 
     <!-- 查询单个 -->

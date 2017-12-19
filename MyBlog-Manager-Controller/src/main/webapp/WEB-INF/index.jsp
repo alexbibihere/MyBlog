@@ -27,7 +27,6 @@
 <% String contextPath = request.getContextPath();
    request.setAttribute("contextPath",contextPath);
 %>
-
 <body class="user-select">
 <section class="container-fluid">
   <header>
@@ -62,7 +61,7 @@
   <div class="row">
     <aside class="col-sm-3 col-md-2 col-lg-2 sidebar">
       <ul class="nav nav-sidebar">
-        <li>  <a class="" href="${pageContext.request.contextPath}/article/getAllLog">去往主页</a></li>
+        <li>  <a class="" href="${pageContext.request.contextPath}/front">去往主页</a></li>
         <li class="active"><a href="${pageContext.request.contextPath}/index">报告</a></li>
       </ul>
       <ul class="nav nav-sidebar">

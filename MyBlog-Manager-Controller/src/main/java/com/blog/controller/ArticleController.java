@@ -1,8 +1,10 @@
 package com.blog.controller;
 
 import com.blog.pojo.Article;
+import com.blog.pojo.Comment;
 import com.blog.pojo.Msg;
 import com.blog.service.ArticleService;
+import com.blog.service.CommentService;
 import com.blog.utils.PageResult;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -33,6 +35,8 @@ public class ArticleController extends BaseController {
 
     @Autowired
     private ArticleService articleService;
+    @Autowired
+    private CommentService commentService;
 
     /**
      * 增加文章的信息
@@ -90,10 +94,21 @@ public class ArticleController extends BaseController {
     @RequestMapping("/getArticles")
     @ResponseBody
     public Msg getArticles(@RequestParam(value="pn",defaultValue="1")Integer pn){
-        PageHelper.startPage(pn, 10);
+        PageHelper.startPage(pn, 5);
         List<Article> articleList=articleService.selectByParams(null);
-        PageInfo<Article> pageInfo = new PageInfo<>(articleList,10);
+        PageInfo<Article> pageInfo = new PageInfo<>(articleList,5);
         return Msg.success().add("pageInfo",pageInfo);
+    }
+
+
+    /**
+     * 查询文章评论
+     */
+    @RequestMapping(value = "/getComment",method = RequestMethod.GET)
+    @ResponseBody
+    public Msg getComment(Long id) {
+        Comment commentList = commentService.selectByPrimaryKey(id);
+        return Msg.success().add("commentList",commentList);
     }
 
     /**
@@ -113,8 +128,8 @@ public class ArticleController extends BaseController {
      * @return
      */
     @RequestMapping(value = "/delete", method = RequestMethod.POST)
-    public String deleteArticle(String id) {
-        articleService.deleteArticle(Integer.parseInt(id));
+    public String deleteArticle(Integer id) {
+        articleService.deleteArticle(id);
         return "article";
     }
 

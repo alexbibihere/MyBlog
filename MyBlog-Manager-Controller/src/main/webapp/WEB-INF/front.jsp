@@ -28,7 +28,46 @@
     <!--[if lt IE 9]>
     <script src="${contextPath}/js/vendor/google/html5-3.6-respond-1.1.0.min.js"></script>
     <![endif]-->
-
+<%--<style>
+    .ellipsis {
+        overflow: hidden;
+        height: 100px;
+        line-height: 25px;
+        margin: 20px;
+        border: 2px solid #AAA;
+    }
+    .ellipsis:before {
+        content:"";
+        float: left;
+        width: 5px; height: 100px;
+    }
+    .ellipsis > *:first-child {
+        float: right;
+        width: 100%;
+        margin-left: -5px;
+    }
+    .ellipsis:after {
+        content: "\02026";
+        box-sizing: content-box;
+        -webkit-box-sizing: content-box;
+        -moz-box-sizing: content-box;
+        float: right;
+        position: relative;
+        top: -25px;
+        left: 100%;
+        width: 3em;
+        margin-left: -3em;
+        padding-right: 5px;
+        text-align: right;
+        /*根据背景颜色更改渐变颜色*/
+        background: -webkit-gradient(linear, left top, right top,
+        from(rgba(255, 255, 255, 0)), to(white), color-stop(50%, white));
+        background: -moz-linear-gradient(to right, rgba(255, 255, 255, 0), white 50%, white);
+        background: -o-linear-gradient(to right, rgba(255, 255, 255, 0), white 50%, white);
+        background: -ms-linear-gradient(to right, rgba(255, 255, 255, 0), white 50%, white);
+        background: linear-gradient(to right, rgba(255, 255, 255, 0), white 50%, white);
+    }
+</style>--%>
 </head>
 <body>
 <header>
@@ -56,7 +95,7 @@
                 <div class="collapse navbar-collapse">
                     <div class="clean-searchbox">
                         <form action="#" method="get" accept-charset="utf-8">
-                            <input class="searchfield" id="searchbox" type="text" placeholder="请输入">
+                            <input class="searchfield" id="search" type="text" placeholder="请输入">
                             <button class="searchbutton" type="submit">
                                 <i class="fa fa-search"></i>
                             </button>
@@ -90,8 +129,9 @@
 <div class="widewrapper main">
     <div class="container">
         <div class="row">
-            <div class="col-md-8 blog-main">
-                <c:if test="${!empty articleList}">
+            <div class="col-md-8 blog-main" id="cre">
+
+              <%--  <c:if test="${!empty articleList}">
                     <c:forEach var="article" items="${articleList}">
                         <article class=" blog-teaser">
                             <header>
@@ -108,7 +148,7 @@
                             </div>
                         </article>
                     </c:forEach>
-                </c:if>
+                </c:if>--%>
             <%--  <div class="row">
                     <div class="col-md-6 col-sm-6">
                         <article class=" blog-teaser">
@@ -187,10 +227,15 @@
                         </article>
                     </div>
                 </div>--%>
+                  <footer class="message_footer">
+                      <nav>
+                          <div class="row">
+                              <div class="col-md-6" id="page_info_area"></div>
+                              <div class="col-md-6" id="page_nav_area"></div>
+                          </div>
+                      </nav>
+                  </footer>
 
-                <div class="paging">
-                    <a href="${contextPath}/#" class="older">再看看以前发布的吧→</a>
-                </div>
             </div>
             <!-- 右侧边栏-->
             <aside class="col-md-4 blog-aside">
@@ -296,11 +341,17 @@
 <script src="${contextPath}/js/jquery.min.js"></script>
 <script src="${contextPath}/js/bootstrap.min.js"></script>
 <script src="${contextPath}/js/modernizr.js"></script>
+<script src="${contextPath}/js/mlellipsis.js"></script>
 <script type="application/javascript">
+
+
+
     //获取最新公告
     $(function () {
+
         getNotice();
         getArticle();
+//        document.getElementById("cre").mlellipsis(5);
     });
    function getNotice() {
        $.ajax({
@@ -336,6 +387,15 @@
     });
    }
 
+   //搜索
+    $("#search").click(function () {
+        $.ajax({
+            type:"POST",
+            url:"${pageContext.request.contextPath}/",
+        })
+    });
+
+
     function getMyDte(str) {
         var oDate = new Date(str),
             oYear = oDate.getFullYear(),
@@ -357,7 +417,7 @@
     }
 
 </script>
-<%--<script type="application/javascript">
+<script type="application/javascript">
 
     $(function () {
         //alert("hello");
@@ -377,33 +437,39 @@
             }
         })
     }
-    //构建用户表
+    //构建主页文章
     function build_user_table(result) {
-        /*  $("#cre ").empty();*/
+          $("#cre ").empty();
 
         var user = result.map.pageInfo.list;
         $.each(user, function (index, item) {
 
-            var div2 = $("<div></div>").addClass("row");
-            var div3 = $("<div></div>").addClass("col-md-6 col-sm-6");
+
             var article =$("<article></article>").addClass("blog-teaser");
 
             var userIdTd = $("<td></td>").append(item.id);
-            var titleImagesTd = $("<td></td>").append(item.titleImages);
-            var titleTd = $("<td></td>").append(item.title);
-            var createTimeTd = $("<td></td>").append(getMyDate(item.createTime));
-            var articleDescribeTd = $("<td></td>").append(getMyDate(item.articleDescribe));
-            /*  var editbtn = $("<button></button>").addClass("btn btn-primary btn-sm editbtn")
-             .append($("<span></span>").addClass("glyphicon glyphicon-pencil"))
-             .append("编辑").attr("editid", item.id);*/
-
-            var operate = $("<td></td>");
-            $("<tr></tr>").append(userIdTd).append(titleImagesTd).append(titleTd)
-                .append(titleTd)
-                .append(createTimeTd).append(articleDescribeTd).append(operate).append(article)
-                .append(div2).append(div3).appendTo($("#cre "));
+            var titleImagesTd = $("<img></img>").append(item.titleImages);
+            var articleDescribeTd = $("<td></td>").append(item.content)/*.css({
+                "text-overflow":"ellipsis",
+                "display":"-webkit-box",
+                "-webkit-line-clamp":"5",
+                "-webkit-box-orient":"vertical",
+                "overflow":"hidden"
+            });*/;
+            var titleTd = $("<a></a>").append(item.title);
+            var createTimeTd = $("<td></td>").append(getMDate(item.modifiedTime));
+            var head =$("<header></header>").append(titleImagesTd).append(titleTd).css({
+                "text-align":"center",
+                "font-family":"Arial",
+                "font-size":"20px"
+            });
+            var div =$("<div></div>").append(articleDescribeTd).addClass("row");
+            var operate = $("<small></small>").append(createTimeTd);
+            $("<div></div>").append(article).append(head).append(div).append(operate)
+                .appendTo($("#cre "));
         });
     }
+
 
     //页码信息
     function build_page_info(result) {
@@ -468,100 +534,31 @@
     }
 
 
-    function getUser(id) {
-        $.ajax({
-            type: "GET",
-            data: "id=" + id,
-            url: "${pageContext.request.contextPath}/user/getUser",
-            success: function (result) {
-                //console.log(result);
-                var user = result.map.user;
-                $("#username").val(user.username);
-                $("#password").val(user.password);
-            }
-        })
+
+
+
+    function getMDate(str) {
+        var oDate = new Date(str),
+            oYear = oDate.getFullYear(),
+            oMonth = oDate.getMonth() + 1,
+            oDay = oDate.getDate(),
+            oHour = oDate.getHours(),
+            oMin = oDate.getMinutes(),
+            oSen = oDate.getSeconds(),
+            oTime = oYear + '-' + getzf(oMonth) + '-' + getzf(oDay) + ' ' + getzf(oHour) + ':' + getzf(oMin) + ':' + getzf(oSen);//最后拼接时间
+        return oTime;
     }
-    $(document).on("click", ".delbtn", function () {
-        deleteMethod($(this).attr("delid"));
-    });
-
-
-
-
-
-    //校验用户名是否可用
-    $("#uname").change(function () {
-        var username = this.value;
-        $.ajax({
-            type:"POST",
-            url:"${path}/user/checkUser",
-            data:"username="+username,
-            success:function (result) {
-                if(result.code==100){
-                    showValidateMsg("#uname","success","用户名可用");
-                    $("#user_add").attr("save", "yes");
-                }else{
-                    showValidateMsg("#uname","error","用户名已存在");
-                    $("#user_add").attr("save", "no");
-                }
-            }
-        })
-
-    });
-
-    function showValidateMsg(ele, status, msg) {
-        $(ele).parent().removeClass("has-error has-success");
-        $(ele).next("span").text("");
-        if (status == "success") {
-            $(ele).parent().addClass("has-success ");
-            $(ele).next("span").text(msg);
-        } else {
-            $(ele).parent().addClass("has-error ");
-            $(ele).next("span").text(msg);
+    ;
+    //补0操作
+    function getzf(num) {
+        if (parseInt(num) < 10) {
+            num = '0' + num;
         }
+        return num;
     }
 
 
-</script>--%>
 
-<script type="application/javascript">
-
-    function getStrLength(str) {
-        var realLength = 0, len = str.length, charCode = -1;
-        for (var i = 0; i < len; i++) {
-            charCode = str.charCodeAt(i);
-            if (charCode >= 0 && charCode <= 128){
-                realLength += 1;
-            }else{
-                realLength += 2;
-            }
-        }
-        return realLength;
-    }
-
-    function cutstr(str, len) {
-        var str_length = 0;
-        var str_len = 0;
-        str_cut = new String();
-        str_len = str.length;
-        for (var i = 0; i < str_len; i++) {
-            a = str.charAt(i);
-            str_length++;
-            if (escape(a).length > 4) {
-                //中文字符的长度经编码之后大于4
-                str_length++;
-            }
-            str_cut = str_cut.concat(a);
-            if (str_length >= len) {
-                str_cut = str_cut.concat("...");
-                return str_cut;
-            }
-        }
-        //如果给定字符串小于指定长度，则返回源字符串；
-        if (str_length < len) {
-            return str;
-        }
-    }
 
 
 </script>
