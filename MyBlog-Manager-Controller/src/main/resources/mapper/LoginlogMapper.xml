@@ -3,6 +3,7 @@
 <mapper namespace="com.blog.dao.LoginlogMapper" >
   <resultMap id="BaseResultMap" type="com.blog.pojo.Loginlog" >
     <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="BIGINT" />
     <result column="username" property="username" jdbcType="VARCHAR" />
     <result column="login_time" property="loginTime" jdbcType="TIMESTAMP" />
     <result column="ip_address" property="ipAddress" jdbcType="VARCHAR" />
@@ -11,32 +12,48 @@
     <result column="modified_time" property="modifiedTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, username, login_time, ip_address, type, create_time, modified_time
+    id, user_id, username, login_time, ip_address, type, create_time, modified_time
   </sql>
-
+  <select id="countByParams" resultType="java.lang.Integer"
+          parameterType="java.util.Map">
+    select COUNT(*) FROM log
+  </select>
+  <select id="selectByLast" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM log  order by create_time desc limit 1
+  </select>
+  <select id="selectByParams" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM log  order by create_time desc
+  </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select 
     <include refid="Base_Column_List" />
-    from loginlog
+    from log
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
-    delete from loginlog
+    delete from log
     where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.blog.pojo.Loginlog" >
-    insert into loginlog (id, username, login_time, 
-      ip_address, type, create_time, 
-      modified_time)
-    values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{loginTime,jdbcType=TIMESTAMP}, 
-      #{ipAddress,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{modifiedTime,jdbcType=TIMESTAMP})
+    insert into log (id, user_id, username, 
+      login_time, ip_address, type, 
+      create_time, modified_time)
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, 
+      #{loginTime,jdbcType=TIMESTAMP}, #{ipAddress,jdbcType=VARCHAR}, #{type,jdbcType=TINYINT}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{modifiedTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.blog.pojo.Loginlog" >
-    insert into loginlog
+    insert into log
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
         id,
+      </if>
+      <if test="userId != null" >
+        user_id,
       </if>
       <if test="username != null" >
         username,
@@ -61,6 +78,9 @@
       <if test="id != null" >
         #{id,jdbcType=BIGINT},
       </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
       <if test="username != null" >
         #{username,jdbcType=VARCHAR},
       </if>
@@ -82,8 +102,11 @@
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.blog.pojo.Loginlog" >
-    update loginlog
+    update log
     <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=BIGINT},
+      </if>
       <if test="username != null" >
         username = #{username,jdbcType=VARCHAR},
       </if>
@@ -106,8 +129,9 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.blog.pojo.Loginlog" >
-    update loginlog
-    set username = #{username,jdbcType=VARCHAR},
+    update log
+    set user_id = #{userId,jdbcType=BIGINT},
+      username = #{username,jdbcType=VARCHAR},
       login_time = #{loginTime,jdbcType=TIMESTAMP},
       ip_address = #{ipAddress,jdbcType=VARCHAR},
       type = #{type,jdbcType=TINYINT},

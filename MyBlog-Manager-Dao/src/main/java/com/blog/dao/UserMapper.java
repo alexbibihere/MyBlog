@@ -13,15 +13,21 @@ public interface UserMapper {
 
     Integer insertSelective(User record);
 
+    User selectByNick(String username);
 
     User selectByPrimaryKey(Integer id);
 
     int updateByPrimaryKeySelective(User record);
 
     int updateByPrimaryKey(User record);
+
     int deleteByPrimaryKey(int id);
 
-    List<User> selectByParams (Map<String,Object> params);
+    List<User> selectByParams(Map<String, Object> params);
+
     List<User> selectByAll();
+
     int countByParams(Map<String, Object> params);
+
+
 }

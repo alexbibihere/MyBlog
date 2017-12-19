@@ -18,7 +18,6 @@ import java.util.List;
 /**
  * 公告相关
  *
- *
  * @author yandeguang
  * @date 2017/7/11/0011
  */
@@ -49,7 +48,7 @@ public class NoticeController extends  BaseController{
     @RequestMapping("/getAllNotice")
     @ResponseBody
     public String getAllNotice(Integer pageNo,Integer pageSize){
-        //logger.info("分页查询用户信息列表请求入参：pageNumber{},pageSize{}", pageNo,pageSize);
+        logger.info("分页查询用户信息列表请求入参：pageNumber{},pageSize{}", pageNo,pageSize);
         try {
             PageResult<Notice> articleList = noticeService.selectByAll(pageNo, pageSize);
             return responseSuccess(articleList);
@@ -64,18 +63,20 @@ public class NoticeController extends  BaseController{
     @RequestMapping("/getNotice")
     @ResponseBody
     public Msg getNotice(int id) {
-        Notice noticeList = noticeService.selectByPrimaryKey(id);
-        return Msg.success().add("noticeList",noticeList);
+        Notice notice = noticeService.selectByPrimaryKey(id);
+        return Msg.success().add("notice",notice);
     }
-   /* *//**
-     * 根据id查询单条数据
-     *//*
-    @RequestMapping("/getNotice")
-    public String getNotice(int id, HttpServletRequest request, Model model) {
-        model.addAttribute("user", noticeService.selectByPrimaryKey(id));
-        request.setAttribute("user", noticeService.selectByPrimaryKey(id));
-        return "editNotice";
-    }*/
+
+
+    /**
+     * 查询最新公告信息
+     */
+    @RequestMapping(value = "/getNewNotice",method = RequestMethod.GET)
+    @ResponseBody
+    public Msg getNewNotice() {
+        Notice notice = noticeService.selectByLast();
+        return Msg.success().add("notice",notice);
+    }
 
     /**
      * 公告删除
@@ -85,22 +86,22 @@ public class NoticeController extends  BaseController{
         Notice user = noticeService.selectByPrimaryKey(id);
         user.setIsDeleted(1);
         noticeService.updateByPrimaryKey(user);
-        //pojo.addAttribute("user", user);
         return "notice";
     }
 
 
+
+
+
     /**
-     * 更新公告
+     * 修改栏目
+     * @param notice
+     * @return
      */
-    @RequestMapping("/update")
-    public String updateNotice(Notice notice, HttpServletRequest request, Model model) {
-        noticeService.updateByPrimaryKey(notice);
-        Notice tblNotice = noticeService.selectByPrimaryKey(notice.getId());
-        request.setAttribute("tblNotice", tblNotice);
-        model.addAttribute("tblNotice", tblNotice);
-        return "redirect:/Notice/getAllNotice";
+    @ResponseBody
+    @RequestMapping( "/update/{id}")
+    public Msg updateCategory(Notice notice){
+        noticeService.updateByPrimaryKeySelective(notice);
+        return Msg.success();
     }
-
-
 }

@@ -15,7 +15,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by yandeguang on 2017/7/22/0022.
+ *
+ * @author yandeguang
+ * @date 2017/7/22/0022
  */
 @Service
 @Transactional
@@ -51,15 +53,7 @@ public class LinkServiceImpl implements LinkService{
         Link link = linkMapper.selectByPrimaryKey(id);
         return link;
     }
-    @Override
-    public PageResult<Link> findList(Integer pageNo, Integer pageSize) {
 
-        pageNo = pageNo == null?1:pageNo;
-        pageSize = pageSize == null?10:pageSize;
-        //startPage是告诉拦截器说我要开始分页了。分页参数是这两个。
-        PageHelper.startPage(pageNo,pageSize);
-        return BeanUtil.toPageResult(linkMapper.selectByAll());
-    }
     @Override
     public int updateByPrimaryKeySelective(Link record) {
         int rows = linkMapper.updateByPrimaryKeySelective(record);

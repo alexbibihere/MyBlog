@@ -72,4 +72,11 @@ public class ArticleServiceImpl implements ArticleService {
         int count = articleMapper.countByParams(params);
         return count;
     }
+
+    @Override
+    public List<Article> selectByLast(){
+        List<Article> articleList = articleMapper.selectByLast();
+        return  articleList;
+    }
+
 }

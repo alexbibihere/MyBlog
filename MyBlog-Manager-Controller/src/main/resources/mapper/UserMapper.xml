@@ -16,16 +16,19 @@
     id, username, password, article_num, last_login_time, status, is_deleted, create_time, 
     modified_time
   </sql>
-  <select id="selectByAll" resultMap="BaseResultMap">
+  <select id="selectByNick" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT * from user where username = #{username}
+  </select>
+  <select id="selectByExampleWithDept" parameterType="java.lang.Integer"
+          resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />
-    FROM user
-
+    from user
   </select>
   <select id="selectByParams" resultMap="BaseResultMap">
     SELECT
   <include refid="Base_Column_List" />
-    FROM user   order by modified_time desc
+    FROM user where is_deleted=0  order by modified_time desc
   </select>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select

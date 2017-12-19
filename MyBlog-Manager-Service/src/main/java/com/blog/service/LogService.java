@@ -1,6 +1,6 @@
 package com.blog.service;
 
-import com.blog.pojo.Log;
+import com.blog.pojo.Loginlog;
 
 import java.util.List;
 import java.util.Map;
@@ -11,17 +11,19 @@ import java.util.Map;
 public interface LogService {
     int deleteByPrimaryKey(Long id);
 
-    int insert(Log record);
+    int insert(Loginlog record);
 
-    int insertSelective(Log record);
+    int insertSelective(Loginlog record);
 
-    Log selectByPrimaryKey(Long id);
+    Loginlog selectByPrimaryKey(Long id);
 
-    int updateByPrimaryKeySelective(Log record);
+    int updateByPrimaryKeySelective(Loginlog record);
 
-    int updateByPrimaryKey(Log record);
+    int updateByPrimaryKey(Loginlog record);
 
-    List<Log> selectByParams(Map<String, Object> params);
+    List<Loginlog> selectByParams(Map<String, Object> params);
 
     int countByParams(Map<String, Object> params);
+
+    Loginlog selectByLast(Long id);
 }

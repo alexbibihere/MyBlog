@@ -15,6 +15,8 @@ public interface NoticeMapper {
 
     List<Notice> selectByAll();
 
+    Notice selectByLast();
+
     Notice selectByPrimaryKey(int id);
 
     int updateByPrimaryKeySelective(Notice record);

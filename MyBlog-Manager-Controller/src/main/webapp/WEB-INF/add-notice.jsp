@@ -82,7 +82,7 @@
       <ul class="nav nav-sidebar">
         <li><a class="dropdown-toggle" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">用户</a>
           <ul class="dropdown-menu" aria-labelledby="userMenu">
-            <li><a href="${contextPath}/user/getAllUser">管理用户</a></li>
+            <li><a href="${contextPath}/manage-user">管理用户</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="${contextPath}/loginlog">管理登录日志</a></li>
           </ul>

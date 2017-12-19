@@ -36,7 +36,7 @@
       var options = {
           currentPage: 1,  //当前页数
           totalPages: 10,  //总页数，这里只是暂时的，后头会根据查出来的条件进行更改
-          numberOfPages:5,
+          numberOfPages:3,
           size:"normal",
           alignment:"andright",
           itemTexts: function (type, page, current) {
@@ -115,8 +115,9 @@
                                       $("#NoticeList").append("<tr>");
                                       $('<td><input type="checkbox" name="checkbox[]" value="" /></td>').appendTo('#NoticeList');
                                       $('<td>' + this.title + '</td>').appendTo($('#NoticeList'));
+                                      $('<td>' + this.content + '</td>').appendTo($('#NoticeList'));
                                       $("#NoticeList").append('<td>' + this.modifiedTime + '</td>');
-                                      $("#NoticeList").append("<a href='javascript:void(0);' onclick='getNotice("+this.id+")'>修改</a>");
+                                      $("#NoticeList").append("<a href='javascript:void(0);' onclick='getNotice("+this.id+")' >修改</a>");
                                       $("#NoticeList").append("<a href='javascript:void(0);' onclick='deleteMethod("+this.id+")'>删除</a></td>");
                                       $("#NoticeList").append("</tr>");
                                   }
@@ -203,7 +204,7 @@
       <ul class="nav nav-sidebar">
         <li><a class="dropdown-toggle" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">用户</a>
           <ul class="dropdown-menu" aria-labelledby="userMenu">
-            <li><a href="${path}/user/getAllUser">管理用户</a></li>
+            <li><a href="${path}/manage-user">管理用户</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="${path}/loginlog">管理登录日志</a></li>
           </ul>
@@ -237,6 +238,7 @@
             <tr>
               <th><span class="glyphicon glyphicon-th-large"></span> <span class="visible-lg">选择</span></th>
               <th><span class="glyphicon glyphicon-file"></span> <span class="visible-lg">标题</span></th>
+              <th><span class="glyphicon glyphicon-file"></span> <span class="visible-lg">内容</span></th>
               <th><span class="glyphicon glyphicon-time"></span> <span class="visible-lg">发布日期</span></th>
               <th><span class="glyphicon glyphicon-pencil"></span> <span class="visible-lg">操作</span></th>
             </tr>
@@ -404,6 +406,37 @@
     </div>
   </div>
 </div>
+<!-- 修改公告模态框 -->
+<div class="modal fade" id="noticeUpdateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel1">修改公告</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" >
+          <div class="form-group">
+            <label class="col-sm-2 control-label">标题：</label>
+            <div class="col-sm-10">
+              <p  class="form-control-static" name="title"  id="title" placeholder="请输入标题"></p>
+
+            </div>
+            <label class="col-sm-2 control-label">内容：</label>
+            <div class="form-group">
+              <textarea style="width: 482px;height: 110px;padding: inherit;margin-left:10px;margin-top: 8px;border: 1px solid #ccc;
+    border-radius: 4px;"rows="2" name="content" id="content"> </textarea>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="save_editNotice">保存</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+      </div>
+    </div>
+  </div>
+</div>
 <!--提示模态框-->
 <div class="modal fade user-select" id="areDeveloping" tabindex="-1" role="dialog" aria-labelledby="areDevelopingModalLabel">
   <div class="modal-dialog" role="document">
@@ -455,19 +488,46 @@
       }
       });
   });
+
+  //绑定编辑按钮 查询公告 填充到弹出的模态框中
+  $(document).on("click","#editbtn",function () {
+      getNotice(id);
+      $("#noticeUpdateModal").modal({
+          drop:"static"
+      });
+  });
   //查出公告信息
   function getNotice(id) {
     $.ajax({
-    type:"GET",
+        type:"GET",
+        url:"${pageContext.request.contextPath}/notice/getNotice",
         data:"id="+id,
-    url:"${pageContext.request.contextPath}/notice/getNotice",
-    success:function (result) {
-        $("#noticeAddModal").modal({
-            backdrop:"static"
-        })
+        success:function (result) {
+       //console.log(result);
+            var notice = result.map.notice;
+            $("#title").text(notice.title);
+            $("#content").val(notice.content);
+            $("#save_editNotice").attr("id",notice.id);
+            $("#noticeUpdateModal").modal({
+                backdrop:"static"
+            });
     }
         })
   }
+
+  //保存修改内容
+  $("#save_editNotice").click(function () {
+      $.ajax( {
+              type:"POST",
+              url:"${pageContext.request.contextPath}/notice/update/"+$(this).attr("id"),
+              data:$("#noticeUpdateModal form").serialize(),
+              success:function (result) {
+              alert(result.msg);
+              top.location.reload();
+          }
+      });
+  });
+
     //是否确认删除
     function deleteMethod(id){
         if (event.srcElement.outerText == "删除")

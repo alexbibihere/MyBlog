@@ -18,4 +18,6 @@ public interface ArticleService {
     int countByParams(Map<String, Object> params);
 
     List<Article> selectByParams(Map<String, Object> params);
+
+    List<Article> selectByLast();
 }

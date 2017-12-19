@@ -2,22 +2,28 @@ package com.blog.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.blog.pojo.Link;
+import com.blog.pojo.Msg;
 import com.blog.service.LinkService;
 import com.blog.utils.PageResult;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
+import java.util.List;
 
 /**
- * Created by yandeguang on 2017/7/20/0020.
- * 友情链接相关
- */
+  *  @Author: Yan
+  *  @Description: 友情链接相关
+  *  @Date: 2017/12/15/0015
+  */
 @Controller
 @RequestMapping("/link")
 public class LinkController extends BaseController{
@@ -31,18 +37,25 @@ public class LinkController extends BaseController{
      */
     @RequestMapping("/add")
     public  String addLink(Link link){
-        link.setModifiedTime(new Date());
         linkService.insertSelective(link);
-        Link link1 = linkService.selectByPrimaryKey(link.getId());
-        System.out.println(JSONObject.toJSONString(link1));
-        //model.addAttribute("Link1",Link1);
         return "flink";
     }
 
-
     /**
-     * 查询所有友情链接
+     * 查询日志列表
      */
+    @RequestMapping("/getAllLink")
+    @ResponseBody
+    public Msg getUsers(@RequestParam(value="pn",defaultValue="1")Integer pn){
+        PageHelper.startPage(pn, 5);
+        List<Link> logList=linkService.selectByParams(null);
+        PageInfo<Link> pageInfo = new PageInfo<>(logList,5);
+        return Msg.success().add("pageInfo",pageInfo);
+    }
+
+   /* *//**
+     * 查询所有友情链接
+     *//*
     @RequestMapping("/getAllLink")
     @ResponseBody
     public String getAllLink(Integer pageNo,Integer pageSize) {
@@ -52,7 +65,7 @@ public class LinkController extends BaseController{
         } catch (Exception e) {
             return responseFail(e.getMessage());
         }
-    }
+    }*/
 
     /**
      * 根据id查询单条数据

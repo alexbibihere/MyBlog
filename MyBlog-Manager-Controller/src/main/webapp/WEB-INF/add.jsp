@@ -143,27 +143,12 @@
 			<div class="col-md-4 col-md-offset-8">
 				<button class="btn btn-primary" id="emp_add_btn">增加</button>
 				<button class="btn btn-danger" id="emp_del_btn">删除</button>
-				<button class="btn btn-danger" id="emp_del_btn">删除</button>
+
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-12">
-				<table class="table table-hover" id="emps_table">
-					<thead>
-						<tr>
-							<th><input type="checkbox" id="check_all"/></th>
-							<th>#</th>
-							<th>Name</th>
-							<th>Gender</th>
-							<th>Email</th>
-							<th>DeptName</th>
-							<th>Operate</th>
-						</tr>
-					</thead>
-					<tbody>
-
-					</tbody>
-				</table>
+				user_table
 			</div>
 		</div>
 		<div class="row">

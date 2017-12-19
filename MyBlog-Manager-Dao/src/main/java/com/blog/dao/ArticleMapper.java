@@ -14,6 +14,8 @@ public interface ArticleMapper {
 
     List<Article> selectByAll();
 
+    List<Article> selectByLast();
+
     void deleteArticle(Article article);
 
     Article getArticle(Integer id);

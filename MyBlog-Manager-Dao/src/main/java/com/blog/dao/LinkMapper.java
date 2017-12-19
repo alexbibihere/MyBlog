@@ -12,7 +12,6 @@ public interface LinkMapper {
 
     int insertSelective(Link record);
 
-    List<Link> selectByAll();
 
     Link selectByPrimaryKey(Integer id);
 

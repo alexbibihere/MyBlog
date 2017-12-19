@@ -1,5 +1,7 @@
 package com.blog.pojo;
 
+import com.blog.pojo.constants.Constants;
+
 import java.util.Date;
 
 public class Loginlog {
@@ -7,11 +9,13 @@ public class Loginlog {
 
     private String username;
 
+    private Integer userId;
+
     private Date loginTime;
 
     private String ipAddress;
 
-    private Byte type;
+    private Integer type;
 
     private Date createTime;
 
@@ -23,6 +27,14 @@ public class Loginlog {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
     public String getUsername() {
@@ -49,11 +61,11 @@ public class Loginlog {
         this.ipAddress = ipAddress == null ? null : ipAddress.trim();
     }
 
-    public Byte getType() {
+    public Integer getType() {
         return type;
     }
 
-    public void setType(Byte type) {
+    public void setType(Integer type) {
         this.type = type;
     }
 

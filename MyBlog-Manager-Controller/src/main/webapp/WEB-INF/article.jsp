@@ -27,12 +27,13 @@
 <!--[if lt IE 9]>
   <script>window.location.href='upgrade-browser.html';</script>
 <![endif]-->
+
   <script type="application/javascript">
     var PAGESIZE = 10;
     var options = {
       currentPage: 1,  //当前页数
       totalPages: 10,  //总页数，这里只是暂时的，后头会根据查出来的条件进行更改
-      numberOfPages:5,
+      numberOfPages:3,
       size:"normal",
       alignment:"andright",
       itemTexts: function (type, page, current) {
@@ -106,13 +107,13 @@
               var dataList = data.dataList;
               $("#ArticleList").empty();//清空表格内容
               if (dataList.length > 0 ) {
-                  $("#count").html("this.count");
+                  $("#count").html(data.total);
                 $(dataList).each(function(){//重新生成
                   if(this.isDel != 1){
                     $("#ArticleList").append("<tr>");
                     $('<td><input type="checkbox" name="checkbox[]" value="" /></td>').appendTo('#ArticleList');
                     $('<td>' + this.title + '</td>').addClass("article-title").appendTo($('#ArticleList'));
-                    $("#ArticleList").append('<td>' + this.column + '</td>');
+                    $("#ArticleList").append('<td>' + this.articleColumn+ '</td>');
                     $('<td>' + this.label + '</td>').addClass("hidden-sm").appendTo($('#ArticleList'));
                     $("#ArticleList").append('<td class="hidden-sm">' + 0 + '</td>').addClass("hidden-sm");
                     $("#ArticleList").append('<td>' + this.modifiedTime + '</td>');
@@ -147,6 +148,7 @@
 
     });
   </script>
+
 </head>
 
 <%
@@ -207,7 +209,7 @@
       <ul class="nav nav-sidebar">
         <li><a class="dropdown-toggle" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">用户</a>
           <ul class="dropdown-menu" aria-labelledby="userMenu">
-            <li><a href="${contextPath}/user/getAllUser">管理用户</a></li>
+            <li><a href="${contextPath}/manage-user">管理用户</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="${contextPath}/loginlog">管理登录日志</a></li>
           </ul>

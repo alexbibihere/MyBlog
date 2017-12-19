@@ -1,7 +1,7 @@
 package com.blog.service.impl;
 
-import com.blog.dao.LogMapper;
-import com.blog.pojo.Log;
+import com.blog.dao.LoginlogMapper;
+import com.blog.pojo.Loginlog;
 import com.blog.service.LogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ import java.util.Map;
 @Transactional
 public class LogServiceImpl implements LogService {
     @Autowired
-    private LogMapper logMapper;
+    private LoginlogMapper logMapper;
 
     @Override
     public int deleteByPrimaryKey(Long id) {
@@ -29,49 +29,55 @@ public class LogServiceImpl implements LogService {
         return rows;
     }
 
-
-    public int insert(Log record) {
+    @Override
+    public int insert(Loginlog record) {
         int id = logMapper.insert(record);
         return id;
     }
-
-    public int insertSelective(Log record) {
+    @Override
+    public int insertSelective(Loginlog record) {
         record.setModifiedTime(new Date());
         record.setCreateTime(new Date());
         int id = logMapper.insertSelective(record);
         return id;
     }
 
-
-    public Log selectByPrimaryKey(Long id) {
-        Log log = logMapper.selectByPrimaryKey(id);
+    @Override
+    public Loginlog selectByPrimaryKey(Long id) {
+        Loginlog log = logMapper.selectByPrimaryKey(id);
         return log;
     }
 
-
-    public int updateByPrimaryKeySelective(Log record) {
+    @Override
+    public int updateByPrimaryKeySelective(Loginlog record) {
         int rows = logMapper.updateByPrimaryKeySelective(record);
         return rows;
     }
 
 
-    public int updateByPrimaryKeyWithBLOBs(Log record) {
-        return 0;
-    }
 
-
-    public int updateByPrimaryKey(Log record) {
+    @Override
+    public int updateByPrimaryKey(Loginlog record) {
         int rows = logMapper.updateByPrimaryKey(record);
         return rows;
     }
-
-    public List<Log> selectByParams(Map<String, Object> params) {
-        List<Log> logList = logMapper.selectByParams(params);
+    @Override
+    public List<Loginlog> selectByParams(Map<String, Object> params) {
+        List<Loginlog> logList = logMapper.selectByParams(params);
         return logList;
     }
 
+    @Override
     public int countByParams(Map params) {
         int count = logMapper.countByParams(params);
         return count;
+    }
+
+
+
+    @Override
+    public Loginlog selectByLast(Long id) {
+        Loginlog logList = logMapper.selectByLast(id);
+        return logList;
     }
 }

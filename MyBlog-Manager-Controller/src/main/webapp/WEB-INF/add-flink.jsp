@@ -82,7 +82,7 @@
       <ul class="nav nav-sidebar">
         <li><a class="dropdown-toggle" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">用户</a>
           <ul class="dropdown-menu" aria-labelledby="userMenu">
-            <li><a href="${contextPath}/user/getAllUser">管理用户</a></li>
+            <li><a href="${contextPath}/manage-user">管理用户</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="${contextPath}/loginlog">管理登录日志</a></li>
           </ul>
@@ -101,13 +101,13 @@
     </aside>
     <div class="col-sm-9 col-sm-offset-3 col-md-10 col-lg-10 col-md-offset-2 main" id="main">
       <div class="row">
-        <form action="${contextPath}/Flink/add" method="post" class="add-flink-form" autocomplete="off" draggable="false">
+        <form action="${contextPath}/link/add" method="post" class="add-flink-form" autocomplete="off" draggable="false">
           <div class="col-md-9">
             <h1 class="page-header">增加友情链接</h1>
             <div class="add-article-box">
               <h2 class="add-article-box-title"><span>名称</span></h2>
               <div class="add-article-box-content">
-                <input type="text" id="flink-name" name="name" class="form-control" placeholder="在此处输入名称" required autofocus autocomplete="off">
+                <input type="text" id="flink-name" name="title" class="form-control" placeholder="在此处输入名称" required autofocus autocomplete="off">
                 <span class="prompt-text">例如：异清轩技术博客</span> </div>
             </div>
             <div class="add-article-box">
@@ -125,7 +125,7 @@
             <div class="add-article-box">
               <h2 class="add-article-box-title"><span>描述</span></h2>
               <div class="add-article-box-content">
-                <textarea class="form-control" name="describe" autocomplete="off"></textarea>
+                <textarea class="form-control" name="description" autocomplete="off"></textarea>
                 <span class="prompt-text">描述是可选的手工创建的内容总结</span> </div>
             </div>
           </div>
@@ -137,13 +137,11 @@
                 <p>
                   <label>状态：</label>
                   <span class="article-status-display">未增加</span></p>
-                <p><label>target：</label><input type="radio" name="target" value="0" checked />_blank&nbsp;&nbsp;<input type="radio" name="target" value="1" />_self&nbsp;&nbsp;<input type="radio" name="target" value="2" />_top</p>
-                <p><label>rel：</label><input type="radio" name="rel" value="0" checked />nofollow&nbsp;&nbsp;<input type="radio" name="rel" value="1"/>none</p>
-                <p>
-                  <label>增加于：</label>
-                  <span class="article-time-display">
-                  <input style="border: none;" type="datetime" name="time" value="2016-01-09 17:29:37" />
-                  </span></p>
+                <p><label>打开链接方式：</label><br/>
+                  <input type="radio" name="target" value="_blank" checked />在新窗口/选项卡中打开。&nbsp;&nbsp;<br/>
+                  <input type="radio" name="target" value="_self" checked/>在同一框架中打开。（默认）&nbsp;&nbsp;<br/>
+                  <input type="radio" name="target" value="_top" />在整个窗口中打开。</p><br/>
+                <p><label>指定当前文档和被连接文档之间的关系：</label><input type="radio" name="rel" value="nofollow" checked />nofollow&nbsp;&nbsp;<input type="radio" name="rel" value="1"/>none</p>
               </div>
               <div class="add-article-box-footer">
                 <button class="btn btn-primary" type="submit" name="submit">增加</button>

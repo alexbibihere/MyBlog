@@ -33,6 +33,12 @@
     from notice
     where id = #{id,jdbcType=INTEGER}
   </select>
+  <select id="selectByLast" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM notice
+    order by create_time desc limit 1
+  </select>
   <select id="selectByAll" resultMap="BaseResultMap">
     select
     <include refid="Base_Column_List" />

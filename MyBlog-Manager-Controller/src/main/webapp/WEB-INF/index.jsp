@@ -62,6 +62,7 @@
   <div class="row">
     <aside class="col-sm-3 col-md-2 col-lg-2 sidebar">
       <ul class="nav nav-sidebar">
+        <li>  <a class="" href="${pageContext.request.contextPath}/article/getAllLog">去往主页</a></li>
         <li class="active"><a href="${pageContext.request.contextPath}/index">报告</a></li>
       </ul>
       <ul class="nav nav-sidebar">
@@ -83,7 +84,7 @@
         <li><a class="dropdown-toggle" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">用户</a>
           <ul class="dropdown-menu" aria-labelledby="userMenu">
             <li><a data-toggle="modal" data-target="#areDeveloping">管理用户组</a></li>
-            <li><a href="${pageContext.request.contextPath}/user/getAllUser">管理用户</a></li>
+            <li><a href="${pageContext.request.contextPath}/manage-user">管理用户</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="${pageContext.request.contextPath}/loginlog">管理登录日志</a></li>
           </ul>
@@ -105,13 +106,13 @@
       <div class="row placeholders">
         <div class="col-xs-6 col-sm-3 placeholder">
           <h4>文章</h4>
-          <span class="text-muted">0 篇</span> </div>
+          <span class="text-muted" ><a id="title"></a>篇</span> </div>
         <div class="col-xs-6 col-sm-3 placeholder">
           <h4>评论</h4>
-          <span class="text-muted">0 条</span> </div>
+          <span class="text-muted"><a  id="comment"></a> 条</span> </div>
         <div class="col-xs-6 col-sm-3 placeholder">
           <h4>友链</h4>
-          <span class="text-muted">0 条</span> </div>
+          <span class="text-muted"><a  id="link"></a> 条</span> </div>
         <div class="col-xs-6 col-sm-3 placeholder">
           <h4>访问量</h4>
           <span class="text-muted">0</span> </div>
@@ -121,10 +122,10 @@
         <table class="table table-striped table-hover">
           <tbody>
             <tr>
-              <td>登录者: <span>admin</span>，这是您第 <span>13</span> 次登录</td>
+              <td>登录者: <span id="user"></span>，这是您第 <span id="count"></span> 次登录</td>
             </tr>
             <tr>
-              <td>上次登录时间: 2016-01-08 15:50:28 , 上次登录IP: ::1:55570</td>
+              <td>上次登录时间: <span id="loginTime"></span> , 上次登录IP:<span id="ip"></span></td>
             </tr>
           </tbody>
         </table>
@@ -136,7 +137,8 @@
             <tr> </tr>
           </thead>
           <tbody>
-            <tr>
+          <p>本博客采用ssm框架,前台用了bootstrap+jquery,ajax无刷新,json传输数据,后台采用了shiro权限管理、redis缓存、lucene全文搜索、nginx反向代理</p>
+            <%--<tr>
               <td>管理员个数:</td>
               <td>2 人</td>
               <td>服务器软件:</td>
@@ -171,7 +173,7 @@
               <td>UTF-8</td>
               <td>当前时间:</td>
               <td>2016-01-08 15:50:30</td>
-            </tr>
+            </tr>--%>
           </tbody>
           <tfoot>
             <tr></tr>
@@ -335,7 +337,78 @@
     <li class="list-group-item"><span>浏览器：</span>Chrome47</li>
   </ul>
 </div>
-<script src="js/bootstrap.min.js"></script> 
-<script src="js/admin-scripts.js"></script>
+<script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/admin-scripts.js"></script>
+<script type="application/javascript">
+
+  $(function () {
+      getCount();
+      getLoginLog();
+  })
+
+  //获取统计数量
+  function getCount() {
+      $.ajax({
+              type: "GET",
+           url:"${pageContext.request.contextPath}/user/getCount",
+          success:function (result) {
+               var count = result.map.user;
+              $("#title").text(count.articleNum);
+              $("#link").text(count.isDeleted);
+              $("#comment").text(count.id);
+          }
+          });
+  }
+
+  //获取登录信息
+  function getLoginLog() {
+    $.ajax({
+        type: "GET",
+        url:"${pageContext.request.contextPath}/log/getLoginLog",
+        success:function (result) {
+            console.log(result);
+            var count = result.map.user;
+            $("#title").text(count.articleNum);
+            $("#link").text(count.isDeleted);
+            $("#comment").text(count.id);
+        }
+    })
+  }
+  //获取登录信息
+  function getLoginLog() {
+      $.ajax({
+          type: "GET",
+          url:"${pageContext.request.contextPath}/log/getLoginLog",
+          success:function (result) {
+              console.log(result);
+              var log = result.map.loginlog;
+              $("#count").text(log.type);
+              $("#user").text(log.username);
+              $("#loginTime").text(getDate(log.loginTime));
+              $("#ip").text(log.ipAddress);
+          }
+      })
+  }
+
+  function getDate(str) {
+      var oDate = new Date(str),
+          oYear = oDate.getFullYear(),
+          oMonth = oDate.getMonth() + 1,
+          oDay = oDate.getDate(),
+          oHour = oDate.getHours(),
+          oMin = oDate.getMinutes(),
+          oSen = oDate.getSeconds(),
+          oTime = oYear + '-' + getzf(oMonth) + '-' + getzf(oDay) + ' ' + getzf(oHour) + ':' + getzf(oMin) + ':' + getzf(oSen);//最后拼接时间
+      return oTime;
+  }
+  ;
+  //补0操作
+  function getzf(num) {
+      if (parseInt(num) < 10) {
+          num = '0' + num;
+      }
+      return num;
+  }
+</script>
 </body>
 </html>

@@ -202,7 +202,7 @@
       <ul class="nav nav-sidebar">
         <li><a class="dropdown-toggle" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">用户</a>
           <ul class="dropdown-menu" aria-labelledby="userMenu">
-            <li><a href="${contextPath}/user/getAllUser">管理用户</a></li>
+            <li><a href="${contextPath}/manage-user">管理用户</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="${contextPath}/loginlog">管理登录日志</a></li>
           </ul>
@@ -260,7 +260,7 @@
             <table class="table table-striped table-hover">
               <thead>
                 <tr>
-                  <th><span class="glyphicon glyphicon-paperclip"></span> <span class="visible-lg">ID</span></th>
+
                   <th><span class="glyphicon glyphicon-file"></span> <span class="visible-lg">名称</span></th>
                   <th><span class="glyphicon glyphicon-list-alt"></span> <span class="visible-lg">别名</span></th>
                   <th><span class="glyphicon glyphicon-pushpin"></span> <span class="visible-lg">父节点</span></th>
@@ -271,7 +271,7 @@
               <c:if test="${!empty categoryList}">
                 <c:forEach var="category" items="${categoryList}">
                   <tr>
-                    <td >  ${category.id} &nbsp;&nbsp;<br></td>
+                    <%--<td >  ${category.id} &nbsp;&nbsp;<br></td>--%>
                     <td >  ${category.title} &nbsp;&nbsp;<br></td>
                     <td>  ${category.alias} &nbsp;&nbsp;<br>
                     <td>${category.fname}</td>
@@ -434,7 +434,7 @@
             <tbody>
             <div class="">
               <td wdith="20%"><label class=" form-control-static">栏目名称</label>:</td>
-              <td width="80%"> <p  class="form-control-static" name="title" id="title"></p></td>
+              <td width="80%"> <p  class="form-control-static"  id="title"></p></td>
             </div>
             <tr>
               <td wdith="20%">栏目别名:</td>

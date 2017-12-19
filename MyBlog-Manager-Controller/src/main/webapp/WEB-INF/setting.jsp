@@ -58,7 +58,7 @@
   <div class="row">
     <aside class="col-sm-3 col-md-2 col-lg-2 sidebar">
       <ul class="nav nav-sidebar">
-        <li><a href="index.html">报告</a></li>
+        <li><a href="front.jsp">报告</a></li>
       </ul>
       <ul class="nav nav-sidebar">
         <li><a href="article.html">文章</a></li>
@@ -78,7 +78,7 @@
       <ul class="nav nav-sidebar">
         <li><a class="dropdown-toggle" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">用户</a>
           <ul class="dropdown-menu" aria-labelledby="userMenu">
-            <li><a href="${pageContext.request.contextPath}/user/getAllUser">管理用户</a></li>
+            <li><a href="${pageContext.request.contextPath}/manage-user">管理用户</a></li>
             <li role="separator" class="divider"></li>
             <li><a href="loginlog.html">管理登录日志</a></li>
           </ul>

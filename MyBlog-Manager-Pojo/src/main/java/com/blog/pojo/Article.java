@@ -14,9 +14,9 @@ public class Article {
 
     private String keyword;//关键字
 
-    private String describe;//描述
+    private String  articleDescribe;//描述
 
-    private String column;//栏目
+    private String articleColumn;//栏目
 
     private String content;//内容
 
@@ -61,20 +61,20 @@ public class Article {
         this.keyword = keyword;
     }
 
-    public String getDescribe() {
-        return describe;
+    public String getArticleDescribe() {
+        return articleDescribe;
     }
 
-    public void setDescribe(String describe) {
-        this.describe = describe;
+    public void setArticleDescribe(String articleDescribe) {
+        this.articleDescribe = articleDescribe;
     }
 
-    public String getColumn() {
-        return column;
+    public String getArticleColumn() {
+        return articleColumn;
     }
 
-    public void setColumn(String column) {
-        this.column = column;
+    public void setArticleColumn(String articleColumn) {
+        this.articleColumn = articleColumn;
     }
 
     public String getLabel() {

@@ -19,7 +19,7 @@ public interface LinkService {
 
     Link selectByPrimaryKey(Integer id);
 
-    PageResult<Link> findList(Integer pageNo, Integer pageSize);
+
 
     int updateByPrimaryKeySelective(Link record);
 

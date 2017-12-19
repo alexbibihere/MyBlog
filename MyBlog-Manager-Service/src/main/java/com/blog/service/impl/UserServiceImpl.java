@@ -63,6 +63,14 @@ public class UserServiceImpl implements UserService {
         System.out.println(count);
         return count;
     }
+    @Override
+    public User checkLogin(String username, String password) {
+        User admin = userMapper.selectByNick(username);
+        if (admin != null && admin.getPassword().equals(password)) {
+            return admin;
+        }
+        return null;
+    }
 
     @Override
     public PageResult<User> selectByAll(Integer pageNo, Integer pageSize) {
@@ -83,7 +91,11 @@ public class UserServiceImpl implements UserService {
         userMapper.updateByPrimaryKey(user);
     }
 
-
+    @Override
+    public User selectByNick(String username) {
+        User user= userMapper.selectByNick(username);
+        return user;
+    }
 
     @Override
     public void updateUser(User user) {

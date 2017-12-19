@@ -34,4 +34,5 @@ public interface NoticeService {
 
     int countByParams(Map<String, Object> params);
 
+    Notice selectByLast();
 }

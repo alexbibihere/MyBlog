@@ -85,4 +85,10 @@ public class NoticeServiceImpl implements NoticeService {
         int count = noticeMapper.countByParams(params);
         return count;
     }
+
+    @Override
+    public Notice selectByLast() {
+        Notice notice = noticeMapper.selectByLast();
+        return notice;
+    }
 }
